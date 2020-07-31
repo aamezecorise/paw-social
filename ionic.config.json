@@ -1,0 +1,7 @@
+{
+  "name": "pawzeeble-tab",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
