@@ -1,0 +1,192 @@
+<ion-header *ngIf="paramsubTitle === 'tagpeople' || paramsubTitle === 'petAccess'" translucent="true">
+  <ion-toolbar>
+      <ion-list-header style="font-size: 20px;font-weight: bold;">
+          <span *ngIf="paramsubTitle === 'tagpeople'">Tag People</span>
+          <span *ngIf="paramsubTitle === 'petAccess'">Pet Access</span>
+      </ion-list-header>
+      <ion-searchbar (ionClear)="onClear($event)" placeholder="Search by Name" (keyup)="searchfilter($event)" animated></ion-searchbar>  
+  </ion-toolbar>
+</ion-header>
+<ion-content overflow-scroll="false" class="guide-modal">
+
+  <div *ngIf="paramTitle === 'textpost' || paramTitle === 'imagepost' || paramTitle === 'videopost'">
+
+    <div *ngIf="paramsubTitle !== 'tagpeople'">
+       <ion-list>
+        <ion-list-header style="font-size: 20px;font-weight: bold;">
+              Post Account
+          </ion-list-header>
+          <ion-list-header style="font-size: 16px;">
+              {{userData.fullName}}'s Siblings
+          </ion-list-header>
+          <ion-item *ngFor="let pet of allpets;let position=index" lines="none" class="user-list">
+            <ion-avatar slot="start" class="user-img">
+              <ion-img *ngIf="pet.profileImage === null" src="assets/icon/dog_gray.svg">
+              </ion-img>
+              <ion-img *ngIf="pet.profileImage" src="{{pet.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{pet.petName}}</h2>
+            </ion-label>
+            <ion-button *ngIf="!CheckInArray2(postAccount, pet._id)" fill="outline" (click)="selectPostAccount(pet)">Select</ion-button>
+            <ion-button *ngIf="CheckInArray2(postAccount, pet._id)" (click)="unselectPostAccount(pet)">Selected</ion-button>
+
+            <!-- <ion-button fill="outline">Select</ion-button> -->
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header style="font-size: 16px;">
+              Parent
+          </ion-list-header>
+          <ion-item lines="none" class="user-list">
+            <ion-avatar slot="start" class="user-img">
+              <ion-img *ngIf="userData.profileImage === null" src="assets/img/profile_icon.png">
+              </ion-img>
+              <ion-img *ngIf="userData.profileImage" src="{{userData.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{userData.fullName}}</h2>
+              <h3>{{userData.userName}}</h3>
+            </ion-label>
+	            <ion-button>Selected</ion-button>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div *ngIf="paramsubTitle === 'tagpeople'">
+       <ion-list>
+          <!-- <ion-list-header style="font-size: 20px;font-weight: bold;">
+              Tag People
+          </ion-list-header>
+          <ion-header>
+            <ion-searchbar (ionClear)="onClear($event)" placeholder="Search by Name" (keyup)="searchfilter($event)" animated></ion-searchbar>  
+          </ion-header> -->
+          <ion-spinner style="margin-left: 45%;margin-top: 10%;transform: scale(1);" *ngIf="isLoading" name="crescent">
+          </ion-spinner>
+
+          <div *ngFor="let user of petusers;let position=index" >
+            <ion-item *ngIf="user._id !== userData.id" lines="none" class="user-list">
+              <ion-avatar (click)="onProfileClick(user)" slot="start" class="user-img">
+                <ion-img *ngIf="user.profileImage === null" src="assets/img/profile_icon.png">
+                </ion-img>
+                <ion-img *ngIf="user.profileImage" src="{{user.profileImage}}">
+                </ion-img>
+              </ion-avatar>
+              <ion-label (click)="onProfileClick(user)">
+                <h2>{{user.fullName}}</h2>
+                <p>{{user.userName}}</p>
+              </ion-label>
+              <!-- <ion-button fill="outline">Tag</ion-button> -->
+
+              <ion-button *ngIf="!CheckInArray1(tagged, user._id)" fill="outline" (click)="tagUser(user)">Tag</ion-button>
+              <ion-button *ngIf="CheckInArray1(tagged, user._id)" (click)="untagUser(user)">Tagged</ion-button>
+            </ion-item>
+          </div>
+        </ion-list>
+      </div>
+
+  </div>  
+
+      <div *ngIf="paramTitle==='followhoomanprofile' || paramTitle === 'petprofile'">
+        <ion-list>
+          <ion-list-header style="font-size: 20px;font-weight: bold;">
+              {{userDetails.fullName}}'s Siblings
+          </ion-list-header>
+
+          <ion-item *ngIf="allpets.length == 0" style="color: #6633cc">
+            <p>No pets available</p>
+          </ion-item>
+  
+          <ion-item *ngFor="let pet of allpets;let position=index" lines="none" class="user-list">
+            <ion-avatar (click)="petProfile(pet)" slot="start" class="user-img">
+              <ion-img *ngIf="pet.profileImage === null" src="assets/icon/dog_gray.svg">
+              </ion-img>
+              <ion-img *ngIf="pet.profileImage" src="{{pet.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label (click)="petProfile(pet)">
+              <h2>{{pet.petName}}</h2>
+            </ion-label>
+
+            <!-- <ion-button fill="outline">Tail</ion-button> -->
+            <ion-button *ngIf="!CheckInArray(userArr, pet._id) && userDetails._id !== userData.id && paramTitle !== 'petprofile'" fill="outline" (click)="FollowPet(pet)">Tail</ion-button>
+            <ion-button *ngIf="CheckInArray(userArr, pet._id) && userDetails._id !== userData.id && paramTitle !== 'petprofile'" (click)="UnFollowPet(pet)">Tailing</ion-button>
+
+          </ion-item>
+        </ion-list>
+
+  </div>
+
+  <div *ngIf="paramsubTitle === 'petAccess'">
+        <!-- <ion-header translucent="true">
+          <ion-toolbar>
+              <ion-list-header style="font-size: 20px;font-weight: bold;">
+                 Pet Access
+              </ion-list-header>
+              <ion-searchbar (ionClear)="onClear($event)" placeholder="Search by Name" (keyup)="searchfilter($event)" animated></ion-searchbar>  
+          </ion-toolbar>
+        </ion-header> -->
+        <ion-list>
+          <ion-spinner style="margin-left: 45%;margin-top: 10%;transform: scale(1);" *ngIf="isLoading" name="crescent">
+          </ion-spinner>
+
+          <div *ngFor="let user of petusers;let position=index" >
+            <ion-item *ngIf="user._id !== userData.id" lines="none" class="user-list">
+              <ion-avatar (click)="onProfileClick(user)" slot="start" class="user-img">
+                <ion-img *ngIf="user.profileImage === null" src="assets/img/profile_icon.png">
+                </ion-img>
+                <ion-img *ngIf="user.profileImage" src="{{user.profileImage}}">
+                </ion-img>
+              </ion-avatar>
+              <ion-label (click)="onProfileClick(user)">
+                <h2>{{user.fullName}}</h2>
+                <p>{{user.userName}}</p>
+              </ion-label>
+
+              <!-- <ion-icon src="assets/icon/key-outline.svg" style="font-size: 32px;color: #6633cc;" (click)="giveAccess(user)"></ion-icon> -->
+              <!-- <ion-icon name="key" style="font-size: 32px;color: #6633cc;" (click)="takeAccess(user)"></ion-icon> -->
+
+
+
+
+              <span *ngFor="let access of user.petAccess;let position=index">
+                  <!-- <ion-icon *ngIf="!CheckInArrayPetAccess(petAccessArr, access.petId)" src="assets/icon/key-outline.svg" style="font-size: 32px;color: #6633cc;" (click)="giveAccess(user)"></ion-icon> -->
+                  <ion-icon *ngIf="CheckInArrayPetAccess(petAccessArr, access.petId)" name="key" style="font-size: 32px;color: #6633cc;position: absolute;margin-top: -6%;z-index: 1;" (click)="takeAccess(user)"></ion-icon>
+              </span>
+              <ion-icon name="key" style="font-size: 32px;" (click)="giveAccess(user)"></ion-icon>
+
+              
+              <!-- <ion-button *ngIf="!CheckInArrayPetAccess(tagged, user._id)" fill="outline" (click)="tagUser(user)">Tag</ion-button> -->
+              <!-- <ion-button *ngIf="CheckInArrayPetAccess(tagged, user._id)" (click)="untagUser(user)">Tagged</ion-button> -->
+            </ion-item>
+          </div>
+        </ion-list>
+
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="paramTitle==='followhoomanprofile' || paramTitle === 'petprofile'" style="text-align: center;height: 12%;font-size: 20px;color: #6633cc;font-weight: 600;">
+    <a style="vertical-align: -webkit-baseline-middle;" (click)="closeModal()">OK</a>
+</ion-footer>
+
+<ion-footer *ngIf="paramsubTitle === 'tagpeople'" style="text-align: center;height: 12%;font-size: 20px;color: #6633cc;font-weight: 600;">
+    <a style="vertical-align: -webkit-baseline-middle;" (click)="taggedPeople()">Done</a>
+</ion-footer>
+
+<ion-footer *ngIf="paramTitle === 'textpost' && paramsubTitle !== 'tagpeople'" style="text-align: center;height: 12%;font-size: 20px;color: #6633cc;font-weight: 600;">
+    <a style="vertical-align: -webkit-baseline-middle;" (click)="TextPost()">Post</a>
+</ion-footer>
+
+<ion-footer id="imgpost" *ngIf="paramTitle === 'imagepost' && paramsubTitle !== 'tagpeople'" style="text-align: center;height: 12%;font-size: 20px;color: #6633cc;font-weight: 600;">
+    <a style="vertical-align: -webkit-baseline-middle;" (click)="uploadImage()">Post</a> 
+</ion-footer>
+
+<ion-footer id="vidpost" *ngIf="paramTitle === 'videopost' && paramsubTitle !== 'tagpeople'" style="text-align: center;height: 12%;font-size: 20px;color: #6633cc;font-weight: 600;">
+    <a style="vertical-align: -webkit-baseline-middle;" (click)="uploadVideo()">Post</a> 
+</ion-footer>
+
+
+<!-- <ion-spinner *ngIf="Loading" style="transform: scale(0.5);" name="crescent"></ion-spinner> -->

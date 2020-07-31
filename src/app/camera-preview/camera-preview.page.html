@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="dismiss()"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              NEW POST
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <h6 style="color: #fff;font-size: 14px;margin-top: 10%;" (click)="next()">Next</h6>
+            <!-- <ion-icon name="add" class="icon-size" (click)="onCreateEvent()"></ion-icon> -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- <img style="max-width: 100%;border: 0;width: 100%;height: 55vh;" src="{{picture}}"> -->
+
+<ion-grid class="grid-top">
+        <div id="preview" style="width:100%;display: flex;overflow: hidden;overflow-x: scroll;position: inherit;"
+        scrollX="true">
+        <ion-card style="height: 35vh;width:100%;min-width:100%;text-align: center"
+          *ngFor="let item of slidesArray;let position=index">
+          <div style="text-align: right;" (click)="removeItem(position)">
+            <ion-icon name="close-circle" end class="closeIcon" color="orange">
+            </ion-icon>
+          </div>
+          <web-photo-filter style="width:100%;height: inherit;" *ngIf="item.type === 'image'"
+              [class.no-original]="selectedFilter != ''" 
+              [class.only-original]="selectedFilter == ''"
+              [src]="item.file" 
+              keep="true" 
+              [filter]="selectedFilter" 
+              (filterLoad)="imageLoaded($event)">
+            </web-photo-filter>
+            <video *ngIf="item.type === 'video'" poster="{{item.thumbnail}}" [autoplay]="true" [muted]="true" class="video-media" style="width: 100%;" height="videoHeight">
+              <source type="video/mp4">
+          </video>
+        </ion-card>
+      </div>
+    </ion-grid>
+ 
+  <!-- Slides with thumbnail preview of all filters -->
+  <ion-slides [options]="slideOpts" *ngIf="slidesArray[0]">
+ 
+    <ion-slide *ngFor="let opts of filterOptions; let i = index;" tappable (click)="filter(i)">
+      <ion-text [class.selected]="i == selectedIndex" style="font-size: 14px;">{{ opts.name }}</ion-text>
+      <div id="preview">
+        <web-photo-filter 
+          [class.no-original]="i > 0" 
+          [src]="default" 
+          keep="false" 
+          [filter]="opts.value">
+        </web-photo-filter>
+      </div>
+    </ion-slide>
+ 
+  </ion-slides>
+
+
+    <ion-fab *ngIf="slidesArray.length < 5" vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button (click)="openGallery()">
+        <ion-icon name="images"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+<!--         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+
+</ion-content>

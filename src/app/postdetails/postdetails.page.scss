@@ -1,0 +1,507 @@
+/* Custom Skeleton Line Height and Margin */
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}
+
+.UserIcon{
+  float:right;
+  color: #fff;
+}
+
+.AppliName{
+  color: #fff;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.icon{
+  font-size: xx-large;
+  margin-left: 22px;
+}
+
+// .header{
+//   padding: 10px 0px 10px 0px;
+//   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+// }
+.header-navigation {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #333;
+  text-align: center;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+/* Slide transitions */
+
+.slideUp {
+    -webkit-transform: translateY(-100px);
+    transform: translateY(-100px);
+    transition: transform .5s ease-out;
+}
+
+.slideDown {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    transition: transform .5s ease-out;
+}
+
+.img-size{
+  // padding-top: 11px;
+  height: 350px;
+  width: 390px;
+}
+
+.dp-size{
+  padding-top: 11px;
+  width:50px;
+  height:50px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+ion-card{ 
+  // margin: 0 !important;
+  // padding: 0 !important;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.ReviewRow{
+  padding: 15px 0px 15px 0px;
+}
+
+.profile-name{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.UserInfoGrid{
+  margin-top: 3px;
+}
+
+.pad-left{
+  padding-left: 10px;
+}
+
+
+
+.CaptionWrap{
+  padding: 12px 0px 12px 0px;
+}
+
+.captionMsg{
+  margin-top: 22px;
+}
+
+.linkTag{
+  color: blue;
+  text-transform: capitalize;
+}
+
+.cmt-dpsize{
+  width: 30px;
+  height: 30px;
+}
+
+.swiper-slide img {
+  height: 400px !important;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: 3px !important;
+}
+// .Caption{
+//   color: #777777;
+//   font-family: arial;
+//   font-size: 14px;
+//   line-height: 20px; 
+//   margin-top: -10px;
+// }
+
+// .comment{
+//   padding-left: 10px;
+// }
+
+.margin-body{
+  margin-right: 14px;
+  margin-left: 14px;
+  margin-top: 4px;
+}
+
+// .margin-comment{
+//   margin-left: 8px;
+//   margin-right: 0px;
+// }
+// .margin-addcomment{
+//   padding-left: 8px;
+// }
+
+.border-top{
+  border-top: 2px solid #eee;    
+  padding: 15px 0px 15px 0px;
+}
+
+.paddin{
+    padding-top: 12px;
+}
+
+.pad-bottom{
+    padding-bottom: 12px;
+}
+
+.text-grey{
+  color: darkgrey;
+  font-size: medium;
+}
+
+.head-center{
+  text-align: center;
+}
+
+.img-dpsize{
+  width: 48px;
+  height: 48px;
+}
+
+.font-user{
+  font-size: 10px;
+}
+
+.location-icon{
+  font-size: 17px;
+  margin-top: 1px;
+  position: absolute;
+}
+
+.location-text{
+  font-size: 14px;
+  margin-left: 20px;
+}
+.content-margin{
+  margin-top: -29px;
+}
+
+.font-comment-size{
+  font-size: 14px;
+  // margin-left: -14px;
+  }
+
+  .myfont-weight{
+    font-weight: bold;
+  }
+
+  .img-comment-dpsize{
+    margin-left: 0px;
+    height: 30px;
+    width: 30px;
+  }
+
+  .comment-section{
+    margin-top: -16px;
+  }
+
+  .comment-section-icon{
+    margin-left: -4px;
+  }
+
+  .comment-post-margin{
+    margin-left: 14px;
+  }
+
+
+  .bookmark-set{
+    width: 24px;
+    height: 25px;
+    margin-left: 5px;
+    font-size: 35px;
+    color: #6633cc;
+  }
+
+  .SlideUserName{    
+    font-weight: 600 !important;
+  }
+
+  .SlideAtUser{
+    color: #6633cc;
+  }
+
+  .SlideImgUserInfo{
+    color: #262626;
+    line-height: 27px;
+    font-size: 18px;
+  }
+
+  // .like-share-set{
+  //   width: 24px;
+  //   height: 25px;
+  //   margin-top: 5px;
+  //   margin-left: 22px;
+  //   font-size: 28px;
+  // }
+
+  .IconCount{
+    margin-top: 2px;
+    position: absolute;
+    font-size: 14px;
+  }
+
+  .col-dp-margin{
+    margin-left: 14px;
+  }
+
+  .time-font-size{
+    font-size: 11px;
+  }
+
+
+  .margin-card{
+    margin-bottom: -32px;
+  }
+
+  .CardHeader{
+    padding: 0px;
+  }
+
+  .listWidth{
+    width: 100%;
+  }
+
+  .CardHeaderLbl1{
+    margin-top: 5px;
+  }
+
+  .CardHeaderLbl2{
+    float: right;
+  }
+
+  .bullets{
+    padding-bottom: 30px;
+  }
+
+  .slider-btn{
+    margin-top: -40px;
+    --ion-color-base: #007aff !important;
+  }
+
+
+  .TimeRow{
+    margin-top: -15px
+  }
+
+  .CardHead{
+    font-size: 23px;
+    font-weight: 400;
+    color: #6633cc;
+  }
+
+  .TimeIcon{
+    font-size: 32px;
+  }
+
+  .TimeInfo{
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .CardInfo{
+    margin-top: -20px;
+  }
+
+  .icon-event{
+    font-weight: bold;
+    
+  }
+
+  .blank{
+    background-color: #fff;
+    padding-bottom: 45px;
+  }
+
+//   .share-icon{
+//     position: absolute;
+//     margin-left: 50px;
+// }
+
+// .icon-sizeT{
+//   font-size: 30px;
+//   color: #000;
+// }
+
+// ion-icon:hover{
+// color: blue;
+// }
+
+
+.heart-icon{  
+  font-size: 80px;
+  color: red;
+  opacity: 1;
+      /*// padding-left: 88px*/
+  }
+  
+  
+  
+   .like-icon{
+    margin-left: -10%;
+    margin-top: -100%;
+    position: absolute;
+       /* background-color: white; */
+/*//       margin-left: -230px;*/
+   }
+
+
+   .LikeAction{
+    touch-action: pan-y !important;
+   }
+
+
+  .icon-size{
+    font-size: 23px !important;
+    color: #fff !important;
+    vertical-align: middle;
+}
+
+.read-user{
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+}
+
+.user2{
+    position: absolute;
+    margin-top: -24px;
+    margin-left: 11px;
+}
+
+.user3{
+    position: absolute;
+    margin-top: -24px;
+    margin-left: 23px;
+}
+
+.read-count{
+    position: absolute;
+    margin-top: 3px;
+    margin-left: -10px;
+    color: #000;
+}
+
+.eye-icon{
+    position: absolute;
+    margin-top: -24px;
+    margin-left: 90px;
+}
+
+.share-count{
+    color: #000;
+    margin-top: 2px;
+    position: absolute;
+    margin-left: 10px;
+}
+
+// .share-icon{
+//     position: absolute;
+//     margin-left: 50px;
+//     margin-top: 0px;
+// }
+
+.heart-count{
+    color: #000;
+    margin-top: 2px;
+    position: absolute;
+}
+// Slider gellary
+// .share-count1{
+//   color: #000;
+//   margin-top: 2px;
+//   position: absolute;
+//   margin-left: 5px;
+//   font-size: 16px;
+// }
+
+// .galleryCard-icon{
+//   position: absolute;
+//     margin-left: 55px;
+//     margin-top: -1px;
+//     font-size: 30px;
+//     color: #000;
+// }
+
+// Drag drop css
+.example-list {
+  width: 500px;
+  max-width: 100%;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.toolBar {
+  /*box-shadow: 0px 1px 5px #888888;*/
+  /*--background:#6633cc;*/
+  height: 56px;
+  text-align: center;
+}
+
+.liked{
+    font-size: 26px;
+    /* float: right; */
+    color: red;
+    margin-left: 8%;
+    position: absolute;
+}
+
+.notLiked{
+    font-size: 26px;
+    color: #000
+}
+

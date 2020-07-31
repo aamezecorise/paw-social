@@ -1,0 +1,55 @@
+ .text-label{
+  margin-left: 15px;
+ }
+
+.icon-size{
+    font-size: 23px !important;
+    color: #fff !important;
+}
+
+.toolBar {
+/*    box-shadow: 0px 1px 5px #888888;
+    --background:#6633cc;*/
+    height: 56px;
+    text-align: center;
+  }
+
+  .titlename{
+    color: #fff;
+      font-size: 24px;
+      font-weight: 400;
+  }
+
+  .img-dpsize{
+    width: 48px;
+    height: 48px;
+  }
+
+  .CardHeaderLbl1{
+    margin-top: 5px;
+  }
+
+  .back-icon{
+    color: #fff;
+    font-size: 25px;
+  }
+
+.location-container {
+    display: flex;
+    min-height: 52px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-top: 3%;
+}
+
+.roundedInput {
+  --border-color: #e4e4e4;
+  --border-radius: 3px;
+  --border-width: 1px;
+  --box-shadow: 2px gray;
+  --highlight-height: 0;
+  --background: #fff;
+   padding: 6px;
+ }

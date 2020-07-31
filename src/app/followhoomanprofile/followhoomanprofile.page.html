@@ -1,0 +1,302 @@
+<ion-header class="header">
+  <ion-toolbar color="primary" class="toolBar">
+  <ion-grid>
+    <ion-row>
+	<ion-col size="1">
+		<ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="back-icon" (click)="onBack()"></ion-icon>
+	</ion-col>
+	<ion-col size=11 class="ion-text-center">
+		<ion-title class="titlename">{{userdetails.userName}}</ion-title>
+	</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="crescent"></ion-refresher-content>
+	</ion-refresher>
+
+  <ion-grid color="light" class="MainGrid">
+    <ion-row>
+      <ion-col size=12 class="ion-text-center mt-3">
+        <img [src]="userdetails.profileImage" class="PetProfileImg" />
+        <h2 color="light" class="PetName">{{userdetails.userName}}</h2>
+      </ion-col>
+
+      <ion-col (click)="viewPets()" size=4 class="GridTop">
+        <div class="PetCountInfo ion-text-center" style="margin-right: -40%;">
+          <span>{{pets}}</span>
+          <p>Pets</p>
+        </div>
+      </ion-col>
+
+      <ion-col (click)="onFollowing()" size=4 class="GridTop">
+        <div class="PetCountInfo ion-text-center" >
+          <span>{{followers}}</span>
+          <p>Followers</p>
+        </div>
+      </ion-col>
+
+      <ion-col (click)="onFollowing()" size=4 class="GridTop">
+        <div class="PetCountInfo ion-text-center" style="margin-right: 40%;">
+          <span>{{following}}</span>
+          <p>Following</p>
+        </div>
+      </ion-col>
+
+      <ion-col *ngIf="userId !== userData.id" size=12 class="ion-text-center GridTop">
+        <ion-button style="height: 50px;" *ngIf="!CheckInArray(userArr, userData.id)" size="medium" fill="outline" (click)="FollowUser()" >FOLLOW</ion-button>
+        <ion-button style="height: 50px;" *ngIf="CheckInArray(userArr, userData.id)" size="medium" (click)="UnFollowUser()" >FOLLOWING</ion-button>
+        <span class="SortArrow ml-2"><i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+        <!-- (click)="presentPopover($event, petdetails)" -->
+      </ion-col>
+
+      <ion-col size=12 class="ion-text-center">
+        <p class="PetInfo">
+          {{userdetails.about_ngo}}
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <!-- ################ Tab Start ################ -->
+
+  <ion-grid style="padding: 0; padding-bottom: 40%;">
+    <ion-row>
+      <ion-col size=12>
+        <mat-tab-group>
+          <!-- @@@@@@@@@@@@@@@@@@@@@ 1st tab start @@@@@@@@@@@@@@@@@@@@@ -->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="fa fa-picture-o TabIcon" aria-hidden="true"></i>
+            </ng-template>
+
+          
+
+            <ion-grid style="padding: 0px;">
+              <ion-row style="padding-top: 3px;">
+
+                <ion-col style="height: 130px;text-align: center;padding: 1.5px;" size="4" *ngFor="let post of imagevideo">
+
+                <ion-slide *ngIf="data">
+                    <ion-skeleton-text animated style="width: 100%;height: 100%;"></ion-skeleton-text>
+                </ion-slide>
+
+                <ion-slide *ngIf="!data">
+                  <img *ngIf="post.postMedia[0].type === 'image'" (click)="postDetails(post)" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{post.postMedia[0].file}}" />
+                  <video loop *ngIf="post.postMedia[0].type === 'video'" (click)="postDetails(post)" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" [muted]="'muted'" autoplay="autoplay" muted="muted"  height="videoHeight">
+                    <source [src]="post.postMedia[0].file" type="video/mp4">
+                    <source [src]="post.postMedia[0].file" type="video/3gp">
+                    <source [src]="post.postMedia[0].file" type="video/mov">
+                    <source [src]="post.postMedia[0].file" type="video/mpeg">
+                    <source [src]="post.postMedia[0].file" type="video/qt">
+                    <source [src]="post.postMedia[0].file" type="video/flv">
+                    <source [src]="post.postMedia[0].file" type="video/mpe">
+                    <source [src]="post.postMedia[0].file" type="video/m4p">
+                    <source [src]="post.postMedia[0].file" type="video/webm">
+                    <source [src]="post.postMedia[0].file" type="video/swf">
+                    <source [src]="post.postMedia[0].file" type="video/mpv">
+                    <source [src]="post.postMedia[0].file" type="video/m4v">
+                    <source [src]="post.postMedia[0].file" type="video/ogg">
+                    <source [src]="post.postMedia[0].file" type="video/avchd">
+                    <source [src]="post.postMedia[0].file" type="video/mp2">
+                    <source [src]="post.postMedia[0].file" type="video/avi">
+                    <source [src]="post.postMedia[0].file" type="video/mpg">
+                    <source [src]="post.postMedia[0].file" type="video/wmv">
+                  </video>
+                  </ion-slide>
+
+                </ion-col>
+
+
+              </ion-row>
+            </ion-grid>
+
+          </mat-tab>
+
+          <!-- @@@@@@@@@@@@@@@@@@@@@ 3nd tab start @@@@@@@@@@@@@@@@@@@@@ -->
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="fa fa-file-text-o TabIcon" aria-hidden="true"></i>
+            </ng-template>
+            <!-- grid data start -->
+            <ion-card *ngFor="let thought of thoughtpost">
+            <ion-grid>
+              <ion-row class="PetListRow">
+                <ion-col size="12">
+                  <ion-item lines="none">
+                    <ion-avatar slot="start">
+                      <img src="{{thought.profileImage}}">
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>{{thought.userName}}</h2>
+                      <p class="mt-1">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        <span class="ml-2">{{thought.createdAt | date:'longDate'}}</span>
+                      </p>
+                      <span *ngIf="userId === userData.id" (click)="presentPopover($event, thought)">
+                        <i class="fa fa-ellipsis-v float-right PetListEllipsIcon" aria-hidden="true"></i>
+                      </span>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+                <ion-card-content  class="card-info">
+                    <div *ngIf="!thought.showMore">
+                      {{trimString(thought.thought,100)}}
+                    </div>
+                    <div *ngIf="thought.showMore">
+                      {{thought.thought}}
+                    </div>
+                    <a *ngIf="thought.thought.length > 100" style="color: #6633cc;border: none;" (click)="thought.showMore = !thought.showMore">Show <span [innerHtml]="thought.showMore ? 'less' : 'More'">  </span>
+                    </a>
+                </ion-card-content>
+                <ion-grid>
+            <ion-row>
+
+
+          <ion-col size="6" style="display: flex">
+           <div style="flex: 1;">
+              <span *ngIf="CheckLikeCountInArray(allLikes, thought._id)">
+                <span *ngFor="let likecount of allLikes" class="heart-count">
+                  <span (click)="viewLikes(likecount)" *ngIf="likecount.postId === thought._id">{{likecount.likes.length}}</span>
+                </span>
+              </span>
+              <!-- <span class="heart-count">{{thought.totalLikes}}</span>
+              <span> -->
+
+                <!-- <span *ngFor="let item of thought.likes; let i = index">
+                  <span *ngIf="item.Userid._id == userData.id">
+                    <ion-icon style="position: absolute;z-index: 1;" (click)="likeUnlike(thought)" src="assets/icon/heart.svg" class="liked"></ion-icon>
+                  </span>
+                </span>
+                <ion-icon (click)="likeUnlike(thought)" src="assets/icon/heart-outline.svg" class="liked"></ion-icon> -->
+
+              <!-- </span> -->
+              <div>
+                <ion-icon *ngIf="!CheckLikeInArray(LikedPosts, thought._id)" class="liked" (click)="likenewPost(thought)" src="assets/icon/heart-outline.svg" style="margin-left: 20px;font-size: 26px;"></ion-icon>
+
+                <ion-icon *ngIf="CheckLikeInArray(LikedPosts, thought._id)" (click)="unlikenewPost(thought)" src="assets/icon/heart.svg" style="margin-left: 20px;font-size: 26px;" class="liked"></ion-icon>
+              </div>
+            </div>
+
+            <div style="flex: 1;">
+              <span class="read-count"></span>
+              <!-- <span class="read-count">{{thought.views.length}}</span> -->
+              <span>
+                <ion-icon style="margin-left: 19%;" class="notLiked"></ion-icon>
+                <!-- <ion-icon style="margin-left: 19%;" class="notLiked" name="eye"></ion-icon> -->
+              </span>
+            </div>
+
+            <!-- <div style="flex: 1;">
+              <span class="share-count"></span>
+              <span>
+                <ion-icon  class="notLiked" name="share-alt" style="margin-left: -18%;">
+                </ion-icon>
+              </span>
+            </div> -->
+
+          
+          </ion-col>
+
+          <ion-col size="6">
+            
+            <div style="margin-left: 70%;">
+              <ion-icon *ngIf="!CheckbookmarkInArray(bookmarkedPosts, thought._id) && thought.userId !== userData.id" class="liked" (click)="bookMarkPost(thought)" src="assets/icon/bookmark-outline.svg" style="margin-left: 10px;font-size: 26px;color: #000"></ion-icon>
+
+              <ion-icon *ngIf="CheckbookmarkInArray(bookmarkedPosts, thought._id) && thought.userId !== userData.id" (click)="unBookMarkPost(thought)" src="assets/icon/bookmark.svg" style="margin-left: 10px;font-size: 26px;color: #000" class="liked"></ion-icon>
+            </div>
+        
+          </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ion-grid>
+  </ion-card>
+  </mat-tab>
+
+  <!-- @@@@@@@@@@@@@@@@@@@@@ 3th tab start @@@@@@@@@@@@@@@@@@@@@ -->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="fa fa-tags TabIcon" aria-hidden="true"></i>
+            </ng-template>
+
+            <ion-grid style="padding: 0px;">
+              <ion-row style="padding-top: 3px;">
+                <ion-col style="height: 130px;text-align: center;padding: 1.5px;" size="4" *ngFor="let post of taggedPost">
+                  <ion-slide>
+                  <img *ngIf="post.postMedia[0].type === 'image'" (click)="postDetails(post)" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{post.postMedia[0].file}}" />
+                  <video loop *ngIf="post.postMedia[0].type === 'video'" (click)="postDetails(post)" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" [muted]="'muted'" autoplay="autoplay" muted="muted"  height="videoHeight">
+                    <source [src]="post.videos[0].file" type="video/mp4">
+                    <source [src]="post.videos[0].file" type="video/3gp">
+                    <source [src]="post.videos[0].file" type="video/mov">
+                    <source [src]="post.videos[0].file" type="video/mpeg">
+                    <source [src]="post.videos[0].file" type="video/qt">
+                    <source [src]="post.videos[0].file" type="video/flv">
+                    <source [src]="post.videos[0].file" type="video/mpe">
+                    <source [src]="post.videos[0].file" type="video/m4p">
+                    <source [src]="post.videos[0].file" type="video/webm">
+                    <source [src]="post.videos[0].file" type="video/swf">
+                    <source [src]="post.videos[0].file" type="video/mpv">
+                    <source [src]="post.videos[0].file" type="video/m4v">
+                    <source [src]="post.videos[0].file" type="video/ogg">
+                    <source [src]="post.videos[0].file" type="video/avchd">
+                    <source [src]="post.videos[0].file" type="video/mp2">
+                    <source [src]="post.videos[0].file" type="video/avi">
+                    <source [src]="post.videos[0].file" type="video/mpg">
+                    <source [src]="post.videos[0].file" type="video/wmv">
+                  </video>
+                  </ion-slide>
+                </ion-col>
+                </ion-row>
+              </ion-grid>
+          </mat-tab>
+
+
+          <!-- @@@@@@@@@@@@@@@@@@@@@ 4th tab start @@@@@@@@@@@@@@@@@@@@@ -->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="fa fa-users TabIcon" aria-hidden="true"></i>
+            </ng-template>
+
+            <ion-grid style="padding: 0px;">
+              <ion-row style="padding-top: 3px;">
+                <ion-col style="height: 130px;text-align: center;padding: 1.5px;" size="4" *ngFor="let post of famjam">
+                  <ion-slide>
+                  <img *ngIf="post.postMedia[0].type === 'image'" (click)="postDetails(post)" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{post.postMedia[0].file}}" />
+                  <video loop *ngIf="post.postMedia[0].type === 'video'" (click)="postDetails(post)" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" [muted]="'muted'" autoplay="autoplay" muted="muted"  height="videoHeight">
+                    <source [src]="post.videos[0].file" type="video/mp4">
+                    <source [src]="post.videos[0].file" type="video/3gp">
+                    <source [src]="post.videos[0].file" type="video/mov">
+                    <source [src]="post.videos[0].file" type="video/mpeg">
+                    <source [src]="post.videos[0].file" type="video/qt">
+                    <source [src]="post.videos[0].file" type="video/flv">
+                    <source [src]="post.videos[0].file" type="video/mpe">
+                    <source [src]="post.videos[0].file" type="video/m4p">
+                    <source [src]="post.videos[0].file" type="video/webm">
+                    <source [src]="post.videos[0].file" type="video/swf">
+                    <source [src]="post.videos[0].file" type="video/mpv">
+                    <source [src]="post.videos[0].file" type="video/m4v">
+                    <source [src]="post.videos[0].file" type="video/ogg">
+                    <source [src]="post.videos[0].file" type="video/avchd">
+                    <source [src]="post.videos[0].file" type="video/mp2">
+                    <source [src]="post.videos[0].file" type="video/avi">
+                    <source [src]="post.videos[0].file" type="video/mpg">
+                    <source [src]="post.videos[0].file" type="video/wmv">
+                  </video>
+                  </ion-slide>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </mat-tab>
+        </mat-tab-group>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

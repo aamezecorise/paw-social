@@ -1,0 +1,169 @@
+
+
+.TabIcon{
+  font-size: 20px;
+  color: #fff;
+}
+
+.CircleBtn{
+  width: 60px;
+  height: 60px;
+}
+
+
+.CircleBtn1{
+  margin: -150px 5px 0px 0px;
+}
+
+.CircleBtn2{
+  margin: 0px 0px 45px 0px;
+}
+
+.CircleBtn3{
+  margin: -147px 0px 0px 8px;
+}
+
+
+//   .shadow[_ngcontent-tls-c1] {
+//     -webkit-filter: drop-shadow(3px -2px 2px rgba(0, 0, 0, 0.7));
+//      filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7)); 
+// }
+
+//  .shadow { 
+//   -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+//   filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+// }
+
+.center {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+
+.ionic-footer{
+  background-color: #fafafa !important;
+  border: none;
+  height: 60px;
+}
+
+.wave-wrap {
+  position: relative;
+  width: 100%;
+  // height: 32px;
+  // overflow: hidden;
+  margin-bottom: 0;
+}
+.wave-wrap #wave {
+  position: absolute;
+  width: 132px;
+  margin-top: -10px;
+  // / transform-origin: bottom; /
+  // / -webkit-transform: scaleY(0.8); /
+  // / transform: scaleY(0.8); /
+  -webkit-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.wave-wrap #wave .path {
+  fill: #fafafa;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+
+//   .shadow[_ngcontent-tls-c1] {
+//     -webkit-filter: drop-shadow(3px -2px 2px rgba(0, 0, 0, 0.7));
+//      filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7)); 
+// }
+
+//  .shadow { 
+//   -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+//   filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+// }
+
+.center {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.footer-color{
+    background-color: #fafafa !important;
+}
+
+.FIcon{
+    font-size: 28px !important;
+}
+
+.fab-btn{
+  --background: #fd736b;
+    --box-shadow: none;
+    height: 50px;
+    width: 50px;
+}
+
+ion-backdrop {
+  opacity: 0.5;
+}
+
+// .SearchBtn{
+//   margin-left: -65px;
+//   padding-left: 1px;
+// }
+
+// .NotifiBtn{
+//   margin-right: -67px;
+// }
+
+ion-fab-button button {
+  background-color: #fd736b !important; 
+}
+
+
+@-webkit-keyframes pulse { 
+  70% { 
+    box-shadow: 0 0 0 50px rgba(#5a99d4, 0);
+  }
+  100% { 
+    box-shadow: 0 0 0 0 rgba(#5a99d4, 0);
+  }
+}
+
+@keyframes fading {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+@-webkit-keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(-80px);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
+
+ .animate {
+  -webkit-animation: fading 2s;
+  animation: fading 2s;
+  }
+
+  ion-fab .fab-list-active .fab-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(100, 100, 100, 0.2);
+}

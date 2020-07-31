@@ -1,0 +1,227 @@
+.toolBar {
+/*  box-shadow: 0px 1px 5px #888888;
+  --background:#6633cc;*/
+  height: 56px;
+  text-align: center;
+}
+
+.back-icon{
+  color: #fff;
+  font-size: 25px;
+}
+
+.titlename{
+  color: #fff;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+#card1 {
+    width: 83px;
+    height: 95px;
+}
+
+h4{
+    color: #6633cc;
+    font-weight: 600;
+}
+
+h6{
+    color: #9597a6;  
+}
+
+h5{
+    margin-top: 2px;
+    color: #454f63;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.PetGrid{
+    box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 0.23);
+}
+
+.PetImageGrid{
+    /*padding-top: 12px;*/
+    /*padding-bottom: 12px;*/
+}
+
+.PetIcon{
+    height: 50px;
+}
+
+.PetNameBody{
+    color: #9597a6;
+    margin-top: -10%;
+}
+
+// Profile circle
+.MainDisplay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.MainDisplay h6{
+    color: #78849e;
+    font-size: 18px;
+    font-weight: 200;
+}
+
+.ImgDisplay{
+    border: 1px solid #6633cc;
+    border-radius: 50%;
+    background-color: #fff;
+    height: 200px;
+    width: 200px;
+}
+
+.ImgAddIcon{
+    font-size: 35px;
+    color: #6633cc;
+    float: right;
+    margin-top: 75px;
+    margin-right: -17px;
+}
+
+.CameraIconDiv{
+    margin-top: 80px;
+    margin-left: 22px;
+}
+
+.CameraIcon{
+    color: #e4e4e4;
+    font-size: 28px;
+}
+
+// Form Control
+.InputBox{
+    height: 50px;
+    margin-top: 7.5px;
+}
+
+// Footer
+
+.footer{
+    background-color: #6633cc !important;
+    color: #fff;    
+    padding: 15px;
+}
+
+.footer-text{
+    font-weight: 300;
+}
+
+/*adoption css*/
+
+.toolBar {
+/*    box-shadow: 0px 1px 5px #888888;
+    --background:#6633cc;*/
+    height: 56px;
+    text-align: center;
+}
+.toolbar-container {
+    height: 56px !important;
+}
+#questionText {
+    color: #8e8e8e;
+    font-size:14px;
+    line-height: 16px;
+    text-align: left;
+}
+ion-slide {
+    flex-direction: column;
+}
+#card {
+    width: 83px;
+    height: 95px;
+    margin-left: 7%;
+}
+#card1 {
+    width: 83px;
+    height: 95px;
+}
+.highlight{
+    border: 1px solid #6633cc;
+    border-radius: 5px;
+}
+#genderLabel {
+    padding-left:10px;
+    font-size: 15px;
+    color: #8e8e8e;
+}
+@media only screen and (max-width: 320px) {
+    #card {
+        width: 70px;
+        height: 70px;
+        float: left;
+    }
+    #card1 {
+        width: 70px;
+        height: 70px;
+        float: left;
+    }
+  }
+#dropDownTitle {
+    font-size: 12px;
+    line-height: 16px; 
+    color: #8e8e8e;
+}
+#btnSignUp {
+    --border-radius: 5px !important;
+    --background: #0066cc !important;
+    height: 35px;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
+    background: #6633cc;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #6633cc;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #6633cc;
+}
+.heading{
+    font-size: 16px;
+    color: #8e8e8e;
+}
+.mat-select{
+    position: bottom;
+}
+.ionic-selectable-cover:focus{
+    outline: none;
+} 
+.itemSelect {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-top: 3%;
+}
+.location-container {
+    display: flex;
+    min-height: 52px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-top: 8%;
+}
+.itemSelect1{
+    border: 2px solid #6633cc;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-top: 3%;
+}
+.closeIcon {
+    position: absolute;
+    margin-left: 32%;
+    margin-left: 11vh;
+    font-size: 19px;
+    margin-top: -1%;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+

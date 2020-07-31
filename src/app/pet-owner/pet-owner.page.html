@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-title class="AppliName">Pet Owner</ion-title>
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="ion-text-center" style="width:100%;">
+            <ion-label>Jay Shah</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option value="nes">NES</ion-select-option>
+              <ion-select-option value="n64">Nintendo64</ion-select-option>
+              <ion-select-option value="ps">PlayStation</ion-select-option>
+              <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+              <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+              <ion-select-option value="snes">SNES</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="MainBody">
+
+  <ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h6 class="CardTitle">My Pet Profile</h6>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col style="margin-top: 1%;" (click)="onNavagateAdd()" size="2">
+          <img src="..\assets\icon\add.png" class="CardImg">
+          <p class="CardHead">Add Pet</p>
+        </ion-col>
+
+        <ion-col size="10">
+          <ion-spinner *ngIf="Loading" style="transform: scale(0.8);margin-left: 40%;color: #6633cc;
+    margin-top: 5%;" name="crescent"></ion-spinner>
+          <ion-slides #slides pager="false" [options]="sliderOpts">
+            <ion-slide *ngFor="let pet of allpets">
+                <ion-col (click)="petProfile(pet)" style="text-align: -webkit-center;" size="10">
+                  <img src="{{pet.profileImage}}" class="CardImg">
+                  <p class="CardHead">{{pet.petName}}</p>
+                </ion-col>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </ion-card>
+
+
+  <!-- 1st Grid end -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h6 class="CardTitle">Features</h6>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+    <div class="ion-text-center">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-icon (click)="applocation()" name="md-appstore" class="CardIcon"></ion-icon>
+            <p class="CardHead">Adoption</p>
+          </ion-col>
+
+          <ion-col size="4">
+            <ion-icon (click)="mating()" name="ios-archive" class="CardIcon"></ion-icon>
+            <p class="CardHead">Mating</p>
+          </ion-col>
+
+          <ion-col size="4">
+            <div (click)="onNavagateEvent()">
+              <ion-icon name="basket" class="CardIcon"></ion-icon>
+              <p class="CardHead">Events</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
+
+
+  <!-- 2nd Grid -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h6 class="CardTitle">Menu</h6>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+  <div class="ion-text-center">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <ion-icon (click)="saved()" name="md-appstore" class="CardIcon"></ion-icon>
+          <p class="CardHead">Saved</p>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-icon name="ios-archive" class="CardIcon"></ion-icon>
+          <p class="CardHead">Setting</p>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-icon (click)="redirectFAQ()" name="basket" class="CardIcon"></ion-icon>
+          <p class="CardHead">FAQ's</p>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-icon (click)="shareLink($event)" name="md-appstore" class="CardIcon"></ion-icon>
+          <p class="CardHead">Invite <br>Friends</p>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-icon name="ios-archive" class="CardIcon"></ion-icon>
+          <p class="CardHead">Help & <br>Support</p>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-icon (click)="redirectPrivacyPolicy()" name="basket" class="CardIcon"></ion-icon>
+          <p class="CardHead">Privacy <br> Policy</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-card>
+
+  <ion-card>
+    <div class="ion-text-center">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-icon slot="start" name="moon"></ion-icon>
+              <ion-label>Dark Mode</ion-label>
+              <ion-toggle slot="end" [ngModel]="darkMode" (ionChange)="camboi()"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
+
+<!-- <ion-list>
+  <ion-item>
+    <ion-icon slot="start" name="moon"></ion-icon>
+    <ion-label>Toggle Dark Theme</ion-label>
+    <ion-toggle slot="end" [ngModel]="!darkMode" (ionChange)="camboi()"></ion-toggle>
+  </ion-item>
+</ion-list> -->
+
+</ion-content>

@@ -1,0 +1,139 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+.back-icon{
+  color: #fff;
+  font-size: 25px;
+}
+
+.roundedInput {
+  --border-color: #e4e4e4;
+  --border-radius: 3px;
+  --border-width: 1px;
+  --box-shadow: 2px gray;
+  --highlight-height: 0;
+  --background: #fff;
+   padding: 6px;
+ }
+
+ .float-label{
+  margin-top: 0px;
+  color: #9597a6;
+  font-weight: 300;
+ }
+
+ .text-label{
+  margin-left: 15px;
+ }
+
+ .next-btn{
+  margin-left: auto;
+  margin-right: auto;
+ }
+
+ ion-label{
+  color: #9597a6 !important;
+  font-weight: 300 !important;
+ }
+
+ .main-button{
+  --box-shadow:none;
+}
+
+.footer{
+  background-color: #6633cc !important;
+  color: #fff;    
+  padding: 15px;
+}
+
+.footer-text{
+  font-weight: 300;
+  font-size: 19px;
+}
+
+.grid-top{
+  padding-top: 20px;
+}
+
+.toolBar {
+/*  box-shadow: 0px 1px 5px #888888;
+  --background:#6633cc;*/
+  height: 56px;
+  text-align: center;
+}
+
+.titlename{
+  color: #fff;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+// Profile circle
+.MainDisplay{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+
+.MainDisplay h6{
+color: #78849e;
+font-size: 18px;
+font-weight: 200;
+}
+
+.ImgDisplay{
+border: 1px solid #395aff;
+border-radius: 50%;
+background-color: #fff;
+height: 200px;
+width: 200px;
+}
+
+.ImgAddIcon{
+font-size: 35px;
+color: #395aff;
+float: right;
+margin-top: 75px;
+margin-right: -17px;
+}
+
+.CameraIconDiv{
+margin-top: 80px;
+margin-left: 22px;
+}
+
+.CameraIcon{
+color: #e4e4e4;
+font-size: 28px;
+}
+
+.ProfileImage{
+  border-radius: 50%;
+  width: 202px;
+  top: 3%;
+  position: absolute;
+  left: 24%;
+  height: 202px;
+}
+
+.location-container {
+    display: flex;
+    min-height: 52px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-top: 3%;
+}
+
+.closeIcon {
+    position: absolute;
+    margin-left: -4vh;
+    font-size: 19px;
+    margin-top: 1%;
+    border-radius: 10px;
+    background-color: #fff;
+}

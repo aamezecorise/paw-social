@@ -1,0 +1,134 @@
+
+
+<!-- <ion-backdrop *ngIf="isBackDrop">
+</ion-backdrop> -->
+
+<div scrollHide #fab>
+
+  <div class="tabMain" (press)="onPress($event)" (pressup)="onPressUp($event)" >
+  <ion-fab horizontal="center" vertical="bottom" activated="false">
+    
+    <ion-fab-button *ngIf="isKeyboardHide" (click)="vibrate()" id="second-parent" class="first" style="margin-bottom: -5px;
+    height: 65px;width: 65px;">
+      <ion-icon style="font-size: 30px;" src="assets/icon/group_52.svg" ></ion-icon>
+      <!-- <ion-icon name="add"></ion-icon> -->
+    </ion-fab-button>
+<!-- (click)="cameraModal($event)" -->
+
+    <div id="animatediv1" cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let timePeriod of timePeriods" cdkDrag>
+        <ion-fab-list side="top">
+        <div class="fab-backdrop"></div>
+
+          <ion-fab-button (click)="textpost()" color="dark" class="CircleBtn CircleBtn2">
+            <i class="fa fa-file-text TabIcon" aria-hidden="true"></i>
+          </ion-fab-button>
+        </ion-fab-list>
+      </div>
+    </div>
+
+    <div id="animatediv2" cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let timePeriod of timePeriods" cdkDrag>
+        <ion-fab-list side="end">
+          <ion-fab-button (click)="eventpage()" color="dark" class="CircleBtn CircleBtn3">
+            <i class="fa fa-calendar TabIcon" aria-hidden="true"></i>
+          </ion-fab-button>
+        </ion-fab-list>
+      </div>
+    </div>
+
+
+    <!-- <div id="animatediv2" cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let timePeriod of timePeriods" cdkDrag>
+        <ion-fab-list side="end">
+          <ion-fab-button (click)="takeVideo()" color="dark" class="CircleBtn CircleBtn3">
+            <i class="fa fa-video-camera TabIcon" aria-hidden="true"></i>
+          </ion-fab-button>
+        </ion-fab-list>
+      </div>
+    </div> -->
+
+
+    <div id="animatediv3" cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let timePeriod of timePeriods" cdkDrag>
+        <ion-fab-list side="start">
+          <ion-fab-button (click)="takePhoto()" color="dark" class="CircleBtn CircleBtn1"
+           >
+            <i class="fa fa-camera TabIcon" aria-hidden="true"></i>
+          </ion-fab-button>
+        </ion-fab-list>
+      </div>
+    </div>
+
+    
+  </ion-fab>
+</div>
+
+<ion-tabs appSwipetab (ionTabsDidChange)="ionTabsDidChange($event)" (tabChange)="onTabChange($event)" #myTabs>
+<!--   <div class="wave-wrap center" style="z-index: 99999;">
+    <svg class="" version="1.1" id="wave" viewBox="0 0 119 26">
+      <path class="path" d="M120.8,26C98.1,26,86.4,0,60.4,0C35.9,0,21.1,26,0.5,26H120.8z" />
+    </svg>
+  </div> -->
+  <ion-tab-bar slot="bottom" class="ionic-footer">
+    <ion-tab-button tab="newsfeed" class="footer-color" (click)="tabButtonClicked('newsfeed')">
+      <ion-icon ios="ios-home" md="md-home" class="FIcon"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab2" class="footer-color SearchBtn" (click)="tabButtonClicked('tab2')">
+      <ion-icon name="search" class="FIcon"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button class="footer-color" *ngIf="isKeyboardHide">
+      <!-- <ion-icon name="add"></ion-icon> -->
+    </ion-tab-button>
+
+    <!-- Code for separate create event modal -->
+
+    <!-- <ion-tab-button (click)="onClick()" class="footer-color">
+      <ion-fab-button class="fab-btn">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-tab-button> -->
+
+    <!-- <ion-tab-button class="footer-color">
+      <ion-fab-button class="fab-btn">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-tab-button> -->
+
+    <!-- <ion-fab-list side="top">
+      <ion-fab-button color="primary" class="CircleBtn CircleBtn2" style="transition-delay: 150ms;">
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="end">
+      <ion-fab-button color="dark" class="CircleBtn CircleBtn3" style="transition-delay: 150ms;">
+        <ion-icon name="logo-twitter"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="start">
+      <ion-fab-button color="light" class="CircleBtn CircleBtn1" style="transition-delay: 150ms;">
+        <ion-icon name="logo-google"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list> -->
+
+    <ion-tab-button tab="tab4" class="footer-color NotifiBtn" (click)="stopInterval()">
+      <ion-icon name="notifications" class="FIcon"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="pet-owner" class="footer-color" (click)="stopInterval()">
+      <ion-icon name="menu" class="FIcon"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+  <!-- fab placed to the bottom start -->
+</ion-tabs>
+</div>
+<!-- <ion-modal-controller></ion-modal-controller> -->
+
+<!-- <ion-backdrop
+  [tappable]="enableBackdropDismiss"
+  [visible]="showBackdrop"
+  [stopPropagation]="shouldPropagate">
+</ion-backdrop>
+ -->

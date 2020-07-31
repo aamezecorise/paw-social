@@ -1,0 +1,251 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="back()"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              MY EVENTS
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <p style="font-size: 12px;color: #fff;margin-top: 12%;" (click)="bookmarkpage()">My bookmarks</p>
+            <!-- <ion-icon name="add" class="icon-size" (click)="onCreateEvent()"></ion-icon> -->
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-toolbar class="search-bar">
+        <ion-searchbar style=" border-radius: 25px !important;"></ion-searchbar>
+      </ion-toolbar> -->
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #pageContent fullscreen>
+  <ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+    <ion-searchbar (ionClear)="onClear($event)" placeholder="Search by Event Name" (keyup)="searchfilter($event)" animated></ion-searchbar>
+
+    <div *ngIf="showEmptyMsg" style="width:100%;height:100px;text-align: center; margin-top: 70%;">
+        <p style="font-size: 24px;color: #6633cc;">No events created yet...!</p>
+    </div>
+
+   <div *ngFor="let event of eventdatalist; let i=index">
+  
+  <div *ngIf="data">
+    <ion-card>
+    <ion-item lines="none" class="user-list" style="margin-bottom: 20%;">
+      <ion-avatar slot="start" class="user-img">
+                <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+      <ion-label class="CardHeaderLbl1" style="margin-bottom: 10%;">
+        <span class="location-text"><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+      </ion-label>
+    </ion-item>
+
+      <ion-row style="margin-bottom: 20%;">
+        <ion-col style="text-align: center;">
+          <ion-spinner style="width: 100px !important;height: 50px !important;" color="primary" name="dots"></ion-spinner>
+        </ion-col>
+      </ion-row>
+
+    <ion-grid>
+      <ion-row style="margin-bottom: 5%;">
+        <ion-col size="12">
+          <span ><ion-skeleton-text animated style="width: 100%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 80%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 60%;height: 15px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <span><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</div>
+
+  <div *ngIf="!data">
+  <ion-card >
+    <ion-item lines="none" class="user-list" >
+      <ion-avatar slot="start" class="user-img">
+        <ion-img *ngIf="event.profileImage === null" src="assets/img/profile_icon.png">
+        </ion-img>
+        <ion-img *ngIf="event.profileImage" src="{{event.profileImage}}">
+        </ion-img>
+        <!-- <img src="{{event.profileImage}}"> -->
+      </ion-avatar>
+      <ion-label>
+        <h2 style="margin-left: 4px;">{{event.userName}}</h2>
+        <h3><span><ion-icon name="pin" style="font-size: 14px;margin-right: 1%;margin-bottom: -1%;">
+        </ion-icon></span>{{event.location.district}}</h3>
+      </ion-label>
+        <ion-icon name="more" (click)="presentPopover($event, event)"></ion-icon>
+      <!-- <ion-icon name="more"></ion-icon> -->
+    </ion-item>
+    <div (click)="onCardClick(event)">
+    <ion-slides  #slides [pager]="event.image.length > 1" [options]="sliderOpts" style="margin-top: 15px;background: white;height: 45vh;">
+    <ion-slide *ngFor="let item of event.image; let i = index">
+      <ion-img style="max-width: 100%;max-height: 100%;" *ngIf="item.type === 'image'" [src]="item.file" class="sliderImage" width="deviceWidth"
+        height="videoHeight"></ion-img>
+    </ion-slide>
+  </ion-slides>
+
+    <ion-card-header>
+      <ion-grid >
+        <ion-row>
+          <ion-col size="6">
+            <span>
+              <ion-icon name="calendar" class="icon-sizeT"></ion-icon>
+            </span>
+            <span>
+              <ion-label class="sizeT-labl">{{event.startDate | date:'mediumDate'}}</ion-label>
+              <ion-label class="sizeT-lab2">{{event.endDate | date:'mediumDate'}}</ion-label>
+            </span>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-icon name="alarm" class="icon-sizeT"></ion-icon>
+            <ion-label class="sizeT-labl">{{event.startTime | date:'shortTime'}} Onwards</ion-label>
+            <ion-label class="sizeT-lab2">{{event.endtime | date:'shortTime'}} Ends</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-card-title class="card-title">{{event.eventName}}</ion-card-title>
+      <ion-card-title style="font-size: 13px;">Event Type - <span style="font-weight: 600">{{event.about}}</span></ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-content  class="card-info" *ngIf="event?.description?.length >= 100">
+    {{event?.description | truncate : 100}}
+      <span><a target="_blank" style="color: #6633cc" *ngIf="!event.truncating && event.description.length > 100" (tap)="event.truncating = false">Read More</a></span>
+      <span><a target="_blank" style="color: #6633cc"  *ngIf="event.truncating && event.description.length > 100" (tap)="event.truncating = true">Show Less</a></span>
+    </ion-card-content>
+
+    <ion-card-content  class="card-info" *ngIf="event?.description?.length < 100">
+    {{event?.description | truncate : 100}}
+    </ion-card-content>
+
+
+  </div>
+  <ion-grid>
+    <ion-row>
+
+
+        <ion-col size="6" style="display: flex">
+          <!-- <img style="margin-top: 1%;" src="./assets/img/dog.jpg" class="read-user user3" /> -->
+          <div style="flex: 1;">
+            <span *ngIf="CheckLikeCountInArray(allLikes, event._id)">
+              <span *ngFor="let likecount of allLikes" class="heart-count">
+                <span (click)="viewLikes(likecount)" *ngIf="likecount.postId === event._id">{{likecount.likes.length}}</span>
+              </span>
+              </span>
+
+              <div>
+                <ion-icon *ngIf="!CheckLikeInArray(LikedPosts, event._id)" class="liked" (click)="likenewPost(event)" src="assets/icon/heart-outline.svg" style="margin-left: 20px;font-size: 26px;"></ion-icon>
+
+                <ion-icon *ngIf="CheckLikeInArray(LikedPosts, event._id)" (click)="unlikenewPost(event)" src="assets/icon/heart.svg" style="margin-left: 20px;font-size: 26px;" class="liked"></ion-icon>
+              </div>
+            <!-- <span class="heart-count">{{event.likes.length}}</span>
+            <span>
+
+              <span *ngFor="let item of event.likes; let i = index">
+                <span *ngIf="item == userData.id">
+                  <ion-icon (click)="likeUnlike(event)" src="assets/icon/heart.svg" class="liked"></ion-icon>
+                </span>
+              </span>
+              <ion-icon (click)="likeUnlike(event)" src="assets/icon/heart-outline.svg" class="liked"></ion-icon>
+
+            </span> -->
+          </div>
+
+          <div style="flex: 1;">
+            <span class="read-count">{{event.views.length}}</span>
+            <span>
+              <ion-icon style="margin-left: -10%;" class="notLiked" name="eye"></ion-icon>
+            </span>
+          </div>
+
+          <!-- <div style="flex: 1;">
+            <span class="share-count"></span>
+            <span>
+              <ion-icon  (click)="shareLink(event)" class="notLiked" name="share-alt" style="margin-left: -18%;">
+              </ion-icon>
+            </span>
+          </div> -->
+
+         
+        </ion-col>
+
+        <ion-col size="6">
+
+       <ion-icon *ngIf="!CheckbookmarkInArray(bookmarkedEvents, event._id) && event.userId !== userData.id" class="liked" (click)="bookMarkEvent(event)" src="assets/icon/bookmark-outline.svg" style="margin-left: 10px;font-size: 26px;color: #000"></ion-icon>
+
+       <ion-icon *ngIf="CheckbookmarkInArray(bookmarkedEvents, event._id) && event.userId !== userData.id" (click)="unBookMarkEvent(event)" src="assets/icon/bookmark.svg" style="margin-left: 10px;font-size: 26px;color: #000" class="liked"></ion-icon>
+
+      
+<!--           <span><ion-icon *ngIf="!isBookMarked && event.userId !== userData.id" (click)="bookMarkEvent(event)" src="assets/icon/bookmark-outline.svg" style="margin-left: 10px;font-size: 26px;color: #000"></ion-icon></span>
+
+      <span><ion-icon *ngIf="isBookMarked && event.userId !== userData.id" (click)="unBookMarkEvent(event)" src="assets/icon/bookmark.svg" style="margin-left: 10px;font-size: 26px;color: #000"></ion-icon></span> -->
+      
+    </ion-col>
+
+  </ion-row>
+</ion-grid>
+
+<!--       <ion-grid *ngIf="event.comments.length !== 0">
+        <ion-row>
+          <div class="ml-3">
+              <span><a (click)="viewComments(event)" target="_blank" style="color: #6633cc">View all <span *ngIf="event.comments.length !== 0">{{event.comments.length}}</span> comments</a></span>
+          </div>
+        </ion-row>
+      </ion-grid>
+
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <div class="ml-2">
+                <ion-avatar style="width: 50%;height: 30%;margin-top: 20%" slot="start">
+                  <ion-img *ngIf="userData.profileImage === null" src="assets/img/profile_icon.png">
+                  </ion-img>
+                  <ion-img *ngIf="userData.profileImage" src="{{userData.profileImage}}">
+                  </ion-img>
+                </ion-avatar>
+              </div>
+            </ion-col>
+
+            <ion-col size="7">
+                <ion-input [(ngModel)]="comment" style="margin-left: -10%;" placeholder='Add a comment...' type="text"></ion-input>
+            </ion-col>
+
+            <ion-col size="3">
+              <button [disabled]="comment === ''" (click)="addcomment(event)" style="color: #6633cc; float: right;margin-top: 15%;margin-right: 15%; background: #fff;" color="light">Post</button>
+            </ion-col>
+        </ion-row>
+      </ion-grid> -->
+      
+  </ion-card>
+  </div>
+  </div>
+
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button (click)="onCreateEvent()">
+		  <ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+</ion-content>
+
+<!-- <div class="bar bar-footer bar-assertive footer">
+  <ion-title class="ion-text-center footer-text">PREVIEW EVENT</ion-title>
+</div> -->

@@ -1,0 +1,89 @@
+<ion-header class="header">
+  <ion-toolbar color="primary" class="toolBar">
+  <ion-grid>
+    <ion-row>
+    	<ion-col size=1>
+            <div class="ion-text-start">
+                <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="onBack()" ></ion-icon>
+            </div>
+          </ion-col>
+
+	      <ion-col size=11 class="ion-text-center">
+	        <ion-title class="titlename">{{userDetails.fullName}}</ion-title>
+	      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="crescent"></ion-refresher-content>
+    </ion-refresher>
+
+  <mat-tab-group mat-align-tabs="center" animationDuration="0ms" class="">
+    <mat-tab label="FOLLOWERS">
+      <ion-list>
+        <ion-item *ngFor="let user of followers;let position=index" lines="none" class="user-list">
+            <ion-avatar slot="start" class="user-img" (click)="onProfileClickfollower(user)">
+              <ion-img *ngIf="user.follower.profileImage === null" src="assets/img/profile_icon.png">
+              </ion-img>
+              <ion-img *ngIf="user.follower.profileImage" src="{{user.follower.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label (click)="onProfileClickfollower(user)">
+              <h2>{{user.follower.fullName}}</h2>
+              <p>{{user.follower.userName}}</p>
+            </ion-label>
+
+          	<ion-button *ngIf="!CheckInArray(userArr, user._id) && userDetails._id === userData.id" fill="outline" (click)="FollowUser(user)">Follow</ion-button>
+          	<ion-button *ngIf="CheckInArray(userArr, user._id) && userDetails._id === userData.id" (click)="UnFollowUser(user)">Following</ion-button>
+          </ion-item>
+
+
+
+      </ion-list>   
+    </mat-tab>
+
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@ 2nd Tab start @@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <mat-tab label="FOLLOWING" class="tab-lbl">
+      <ion-list>
+        <div *ngFor="let user of following;let position=index">
+         <ion-item *ngIf="user.userFollowed" lines="none" class="user-list">
+            <ion-avatar  slot="start" class="user-img" (click)="onProfileClickfollowing(user)">
+              <ion-img *ngIf="user.userFollowed.profileImage === null" src="assets/img/profile_icon.png">
+              </ion-img>
+              <ion-img *ngIf="user.userFollowed.profileImage" src="{{user.userFollowed.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label (click)="onProfileClickfollowing(user)">
+              <h2>{{user.userFollowed.fullName}}</h2>
+              <p>{{user.userFollowed.userName}}</p>
+            </ion-label>
+          	<ion-button *ngIf="CheckInArray(userArr, user._id) && userDetails._id === userData.id" fill="outline" (click)="FollowUser(user)">Follow</ion-button>
+          	<ion-button *ngIf="!CheckInArray(userArr, user._id) && userDetails._id === userData.id" (click)="UnFollowUser(user)">Following</ion-button>
+          </ion-item>
+
+          <ion-item *ngIf="user.petFollowed" lines="none" class="user-list">
+            <ion-avatar  slot="start" class="user-img">
+              <ion-img *ngIf="user.petFollowed.profileImage === null" src="assets/img/profile_icon.png">
+              </ion-img>
+              <ion-img *ngIf="user.petFollowed.profileImage" src="{{user.petFollowed.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label >
+              <h2>{{user.petFollowed.petName}}</h2>
+              <!-- <p>{{user.userFollowed.userName}}</p> -->
+            </ion-label>
+          	<ion-button *ngIf="CheckInArray(userArr, user._id) && userDetails._id === userData.id" fill="outline" (click)="FollowPet(user)">Follow</ion-button>
+          	<ion-button *ngIf="!CheckInArray(userArr, user._id) && userDetails._id === userData.id" (click)="UnFollowPet(user)">Following</ion-button>
+          </ion-item>
+
+       </div>
+
+      </ion-list>
+    </mat-tab>
+  </mat-tab-group>
+</ion-content>

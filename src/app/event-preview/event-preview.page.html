@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start" (click)="onCreateEventBack()">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              EVENT PREVIEW
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <!-- <div class="ion-text-end">
+              <ion-icon name="add" class="icon-size" (click)="onCreateEvent()"></ion-icon>
+            </div> -->
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-toolbar class="search-bar">
+          <ion-searchbar style=" border-radius: 25px !important;"></ion-searchbar>
+        </ion-toolbar> -->
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="main-card">
+    <ion-item lines="none" class="user-list">
+      <ion-avatar slot="start" class="user-img">
+        <ion-img *ngIf="userData.profileImage === null || userData.profileImage === undefined" src="assets/img/profile_icon.png">
+        </ion-img>
+        <ion-img *ngIf="userData.profileImage" src="{{userData.profileImage}}">
+        </ion-img>
+        <!-- <img [src]="userData.profileImage"> -->
+      </ion-avatar>
+      <ion-label>
+        <h2 style="margin-left: 4px;">{{userData.fullName}}</h2>
+        <h3><span><ion-icon name="pin" style="font-size: 18px;margin-right: 1%;margin-bottom: -1%;">
+        </ion-icon></span>{{eventpreviewdata.location.district}}</h3>
+      </ion-label>
+      <!-- <ion-icon name="more"></ion-icon> -->
+    </ion-item>
+
+    <ion-slides style="margin-top: 15px;background: white;height: 45vh;" [pager]="images.length > 1" [options]="sliderOpts">
+      <ion-slide *ngFor="let item of images;let position=index">
+        <ion-img style="max-width: 100%;max-height: 100%;" *ngIf="item.type === 'image'" [src]="item.file" width="deviceWidth"
+        height="videoHeight">
+        </ion-img>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-card-header>    
+      <!-- @@@@@@@@@ 2nd grid start@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <span>
+              <ion-icon name="calendar" class="icon-sizeT"></ion-icon>
+            </span>
+            <span>
+              <ion-label class="sizeT-labl">{{eventpreviewdata.startDate | date:'mediumDate'}}</ion-label>
+              <ion-label class="sizeT-lab2">{{eventpreviewdata.endDate | date:'mediumDate'}}</ion-label>
+
+            </span>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-icon name="alarm" class="icon-sizeT"></ion-icon>
+            <ion-label class="sizeT-labl">{{eventpreviewdata.startTime | date:'shortTime'}} Onwards</ion-label>
+            <ion-label class="sizeT-lab2">{{eventpreviewdata.endtime | date:'shortTime'}} Ends</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>      
+    </ion-card-header>
+    <ion-card-content class="pb-3">
+        <!-- <span class="PreLbl mt-3">PRIVATE EVENT</span> -->
+        <ion-card-title class="card-title">{{eventpreviewdata.eventName}}</ion-card-title>
+       <span class="card-info">
+        {{eventpreviewdata.description}}
+       </span>
+    </ion-card-content>
+
+  </ion-card>
+
+<!--    <div style="display: flex;flex-direction: column;color: #fff;text-align: center;
+   font-size: 30px;">
+     <div style="flex: 1;background-color: #6633cc;" (click)="uploadImage()">
+       <ion-title style="margin-top: 5%;" class="ion-text-center footer-text">CREATE EVENT</ion-title>
+     </div>
+   </div> -->
+
+</ion-content>
+
+<ion-footer padding style="background: white;" no-border>
+  <ion-button expand="block" id="create" (click)="uploadImage()">CREATE EVENT <ion-spinner *ngIf="Loading" style="transform: scale(0.8);" name="crescent"></ion-spinner></ion-button>
+</ion-footer>
+
+<!-- <div class="bar bar-footer bar-balanced" (click)="uploadImage()">
+  <ion-title class="ion-text-center footer-text">CREATE EVENT</ion-title>
+</div> -->
+
+<!-- <ion-footer>
+  <div style="margin-top: -55%;" class="footer" (click)="uploadImage()">
+    <ion-title class="ion-text-center footer-text">CREATE EVENT</ion-title>
+  </div>
+</ion-footer> -->
+
+
+

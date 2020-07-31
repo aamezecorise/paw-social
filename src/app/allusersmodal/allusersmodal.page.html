@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-start">
+                <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="closeModal()" ></ion-icon>
+            </div>
+          </ion-col>
+          <ion-col>
+              <div class="ion-text-center">
+                  <ion-title class="titlename">
+                      ALL USERS
+                  </ion-title>
+              </div>
+          </ion-col>
+          <ion-col>
+          </ion-col>      
+        </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar (ionClear)="onClear($event)" placeholder="Search by Name" (keyup)="searchfilter($event)" animated></ion-searchbar>
+
+      <ion-list>
+            <ion-spinner style="margin-left: 50%;margin-top: 50%;transform: scale(1.2);" *ngIf="isLoading" name="crescent" id="pageLoader">
+            </ion-spinner>
+  
+  		<div *ngFor="let user of allUsers;let position=index" >
+          <ion-item *ngIf="user._id !== userData.id" lines="none" class="user-list">
+            <ion-avatar (click)="onProfileClick(user)" slot="start" class="user-img">
+              <ion-img *ngIf="user.profileImage === null" src="assets/img/profile_icon.png">
+              </ion-img>
+              <ion-img *ngIf="user.profileImage" src="{{user.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label (click)="onProfileClick(user)">
+              <h2>{{user.fullName}}</h2>
+              <p>{{user.userName}}</p>
+            </ion-label>
+          	<ion-button *ngIf="!CheckInArray(userArr, user._id)" fill="outline" (click)="FollowUser(user)">Follow</ion-button>
+          	<ion-button *ngIf="CheckInArray(userArr, user._id)" (click)="UnFollowUser(user)">Following</ion-button>
+          </ion-item>
+          </div>
+
+        </ion-list>
+</ion-content>
+

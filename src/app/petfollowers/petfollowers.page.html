@@ -1,0 +1,47 @@
+<ion-header class="header">
+  <ion-toolbar color="primary" class="toolBar">
+  <ion-grid>
+    <ion-row>
+    	<ion-col size=1>
+            <div class="ion-text-start">
+                <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="onBack()" ></ion-icon>
+            </div>
+          </ion-col>
+
+	      <ion-col size=11 class="ion-text-center">
+	        <ion-title class="titlename">{{petDetails.petName}}</ion-title>
+	      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-refresher style="z-index: 0;" slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="crescent"></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-list>
+          <ion-list-header style="font-size: 20px;">
+              {{followers.length}} FOLLOWERS
+          </ion-list-header>
+
+          <ion-item *ngFor="let user of followers;let position=index" lines="none" class="user-list">
+            <ion-avatar slot="start" class="user-img">
+              <ion-img *ngIf="user.follower.profileImage === null" src="assets/img/profile_icon.png">
+              </ion-img>
+              <ion-img *ngIf="user.follower.profileImage" src="{{user.follower.profileImage}}">
+              </ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{user.follower.fullName}}</h2>
+              <p>{{user.follower.userName}}</p>
+            </ion-label>
+
+            <ion-button *ngIf="petDetails.userId === userData.id" fill="outline" (click)="removeFollower(user)" >REMOVE</ion-button>
+
+          </ion-item>
+        </ion-list>
+
+</ion-content>

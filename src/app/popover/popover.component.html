@@ -1,0 +1,75 @@
+<ion-content style="--background: #F6F6F6;">
+
+<!-- 	<ion-list lines="none" *ngIf="paramTitle==='newsfeed'">
+    	<ion-item>Report</ion-item>
+		<ion-item>Unfollow</ion-item>
+		<ion-item>Notification On</ion-item>
+		<ion-item>Block</ion-item>
+	</ion-list> -->
+
+  <ion-list lines="none" *ngIf="paramTitle==='newsfeed'">
+      <ion-item (click)="report()">Report</ion-item>
+<!--       <ion-item>This is a spam</ion-item>
+    <ion-item>This is inappropriate content</ion-item> -->
+  </ion-list>
+
+	<ion-list lines="none" *ngIf="paramTitle==='myevents'">
+    	<ion-item class="ionItem" (click)="deleteEvent()">Delete Event</ion-item>
+	</ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='followhoomanprofile' || paramTitle==='postdetails'">
+      <ion-item class="ionItem" (click)="deletePost()">Delete Post</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='petprofile'">
+      <ion-item class="ionItem" (click)="editPetProfile()">Edit Pet</ion-item>
+  </ion-list>
+
+<!--   <ion-list lines="none" *ngIf="paramTitle==='followhoomanprofile'">
+      <ion-item class="ionItem">Email ID</ion-item>
+      <ion-item class="ionItem">Message</ion-item>
+      <ion-item class="ionItem">Send Link</ion-item>
+      <ion-item class="ionItem">Report</ion-item>
+  </ion-list> -->
+
+  
+  <!-- <ion-list lines="none" *ngIf="paramTitle==='profile'">
+    <ion-item class="ionItem" (click)="segment=='saved' ? removeBookmarkedPet() : removePet()">Remove from Saved Pets</ion-item>
+    <ion-item class="ionItem" (click)="shareLink1()">Share Link</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='adoptionList' && paramId==='1'">
+    <ion-item class="ionItem" (click)="shareLink1()">Share Link</ion-item>
+    <ion-item class="ionItem" (click)="reportPage()">Report Pet</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='adoptionList' && paramId==='2'">
+    <ion-item class="ionItem" (click)="adoptPet()">Mark as Adopted</ion-item>
+    <ion-item class="ionItem" (click)="removePet()">Remove Pet from listing</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='chatList'">
+    <ion-item class="ionItem" >Report User</ion-item>
+    <ion-item class="ionItem" >Mute</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='chat'">
+    <ion-item class="ionItem" >Report User</ion-item>
+    <ion-item class="ionItem" >Mute</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='chatpage'">
+    <ion-item class="ionItem" >Report User</ion-item>
+    <ion-item class="ionItem" >Mute</ion-item>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="paramTitle==='adoptionDetails'">
+    <ion-item class="ionItem" (click)="shareLink()">Share Link</ion-item>
+    <ion-item  *ngIf="paramId === '2'" (click)="editPetProfile()" class="ionItem">Edit Profile</ion-item>
+    <ion-item *ngIf="paramId === '1'" class="ionItem" (click)="reportPage()">Report Pet</ion-item>
+  </ion-list>
+  <ion-list lines="none" *ngIf="paramTitle==='userProfile'">
+    <ion-item class="ionItem" (click)="shareLink1()">Share Link</ion-item>
+    <ion-item class="ionItem" (click)="reportProfile()">Report Profile</ion-item>
+  </ion-list> -->
+</ion-content>

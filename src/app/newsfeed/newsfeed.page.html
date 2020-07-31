@@ -1,0 +1,332 @@
+<ion-header #header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col size=1>
+        </ion-col>
+        <ion-col size=10 class="ion-text-center">
+          <ion-title class="AppliName">Pawzeeble</ion-title>
+        </ion-col>
+        <ion-col size=1>
+          <ion-icon name="person" class="icon UserIcon" (click)="onProfileClick(userDetails)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)" (ionScrollStart)="scrollStart(header)" fullscreen>
+  <ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="crescent"></ion-refresher-content>
+  </ion-refresher>
+
+<!--   <ion-searchbar (ionClear)="onClear($event)" placeholder="Search by username" (keyup)="searchfilter($event)" animated></ion-searchbar> -->
+
+  <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Card start @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+  <div *ngFor="let post of newsfeedData; let i=index">
+
+  <div *ngIf="data">
+  <ion-card>
+    <ion-item lines="none" class="user-list" style="margin-bottom: 20%;">
+      <ion-avatar slot="start" class="user-img">
+                <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+      <ion-label class="CardHeaderLbl1" style="margin-bottom: 10%;">
+        <span class="location-text"><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+      </ion-label>
+    </ion-item>
+
+      <ion-row style="margin-bottom: 20%;">
+        <ion-col style="text-align: center;">
+          <ion-spinner style="width: 100px !important;height: 50px !important;" color="primary" name="dots"></ion-spinner>
+        </ion-col>
+      </ion-row>
+
+    <ion-grid>
+      <ion-row style="margin-bottom: 5%;">
+        <ion-col size="12">
+          <span ><ion-skeleton-text animated style="width: 100%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 80%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 60%;height: 15px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <span><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</div>
+
+
+  <div *ngIf="!data">
+  <ion-card>
+    <ion-card-header *ngIf="post.postType == 'thought' || post.postType == 'media'" class="CardHeader">
+      <ion-row>
+        <ion-list class="listWidth" style="padding-top: 0;">
+          <ion-item lines="none">
+            <ion-avatar (click)="onUserProfileClick(post)" *ngIf="post.postAccount.length == 0 || post.postAccount.length > 1" slot="start">
+              <ion-img src="{{post.profileImage}}" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-avatar *ngIf="post.postAccount.length == 1" slot="start">
+              <ion-img src="{{post.postAccount[0].Petid.profileImage}}" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-grid>
+              <ion-row>
+                <ion-col *ngIf="post.postAccount.length == 0 || post.postAccount.length > 1" size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1" (click)="onUserProfileClick(post)">
+                    <h2 style="margin-left: 2%;">{{post.userName}}</h2>
+                    <ion-icon *ngIf="post.location !== null" name="pin" class="location-icon"></ion-icon><span
+                        class="location-text" *ngIf="post.location !== null">{{post.location.district}}</span>
+                    <!-- <p (click)="onUserProfile()" style="margin-top: 6px;"><span>{{post.userName}}</span>
+                      <ion-icon name="pin" class="location-icon"></ion-icon><span
+                        class="location-text">{{post.location.district}}</span>
+                    </p> -->
+                  </ion-label>
+                </ion-col>
+
+                <ion-col *ngIf="post.postAccount.length == 1" size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1">
+                    <h2>{{post.postAccount[0].PetName}}</h2>
+                    <!-- <h2>{{post.parent}}</h2> -->   <!-- {{post.child}} -->
+                    <p (click)="onUserProfile()" style="margin-top: 6px;"><span>{{post.userName}}</span>
+                      <ion-icon *ngIf="post.location !== null" name="pin" class="location-icon"></ion-icon>
+                      <span class="location-text" *ngIf="post.location !== null">{{post.location.district}}</span>
+                    </p>
+                  </ion-label>
+                </ion-col>
+
+                <ion-col size="2">
+                  <ion-label class="CardHeaderLbl2">
+                    <span>
+                      <ion-icon name="ios-more" style="font-size: x-large; margin-left:50%;" (click)="presentPopover($event, post)"></ion-icon>
+                      <p class="time-font-size">{{TimeFromNow(post.createdAt)}}</p>
+                      <!-- {{post.createdAt | date:'shortTime'}} -->
+                    </span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-header *ngIf="post.postType == 'event'" class="CardHeader">
+      <ion-row>
+        <ion-list class="listWidth" style="padding-top: 0;">
+          <ion-item lines="none">
+            <ion-avatar (click)="onUserProfileClick(post)" slot="start">
+              <ion-img src="{{post.profileImage}}" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1" (click)="onUserProfileClick(post)">
+                    <h2 style="margin-left: 2%;">{{post.userName}}</h2>
+                    <ion-icon *ngIf="post.location !== null" name="pin" class="location-icon"></ion-icon><span
+                        class="location-text" *ngIf="post.location !== null">{{post.location.district}}</span>
+                  </ion-label>
+                </ion-col>
+
+                <ion-col size="2">
+                  <ion-label class="CardHeaderLbl2">
+                    <span>
+                      <ion-icon name="ios-more" style="font-size: x-large; margin-left:50%;" (click)="presentPopover($event, post)"></ion-icon>
+                      <p class="time-font-size">{{TimeFromNow(post.createdAt)}}</p>
+                      <!-- {{post.createdAt | date:'shortTime'}} -->
+                    </span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ion-row>
+    </ion-card-header>
+
+
+    <div *ngIf="post.postType === 'media'" class="slider-container">
+      <ion-slides #slides [pager]="post.postMedia.length > 1" [options]="sliderOpts" style="background: white;height: 45vh;">
+        <ion-slide *ngFor="let item of post.postMedia; let i = index">
+          <div class="slide" tappable doubleTapable (tap)="changeVideoAudio(item.file)" (doubleTap)="likenewPost(post)" (tripleTap)="doAnotherThing()"
+            class="LikeAction">
+            <ion-img style="width: 100%;height: -webkit-fill-available;" *ngIf="item.type === 'image'" [src]="item.file" width="deviceWidth" height="videoHeight"></ion-img>
+
+            <video *ngIf="item.type === 'video'" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }" (inViewportAction)="onIntersection($event)" playsinline loop [muted]="'muted'" autoplay="autoplay" preload="auto" [poster]="video?.src" [id]="'media-' + item.file" class="video-media" height="videoHeight" style="height: -webkit-fill-available;width: 100%;">
+              <source [src]="item.file" type="video/mp4">
+              <source [src]="item.file" type="video/3gp">
+              <source [src]="item.file" type="video/mov">
+              <source [src]="item.file" type="video/mpeg">
+              <source [src]="item.file" type="video/qt">
+              <source [src]="item.file" type="video/flv">
+              <source [src]="item.file" type="video/mpe">
+              <source [src]="item.file" type="video/m4p">
+              <source [src]="item.file" type="video/webm">
+              <source [src]="item.file" type="video/swf">
+              <source [src]="item.file" type="video/mpv">
+              <source [src]="item.file" type="video/m4v">
+              <source [src]="item.file" type="video/ogg">
+              <source [src]="item.file" type="video/avchd">
+              <source [src]="item.file" type="video/mp2">
+              <source [src]="item.file" type="video/avi">
+              <source [src]="item.file" type="video/mpg">
+              <source [src]="item.file" type="video/wmv">
+            </video>
+            <!-- <span class="like-icon" *ngIf="like" @fadein> -->
+              <ion-icon name="heart" class="heart-icon like-icon" *ngIf="like" @fadein></ion-icon>
+            <!-- </span> -->
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <div *ngIf="post.postType === 'thought'">
+          <ion-card-content  class="card-info">
+              <div *ngIf="!post.showMore">
+                {{trimString(post.thought,100)}}
+              </div>
+              <div *ngIf="post.showMore">
+                {{post.thought}}
+              </div>
+              <a *ngIf="post.thought.length > 100" (click)="viewpost(post)" style="color: #6633cc" (click)="post.showMore = !post.showMore">Show <span [innerHtml]="post.showMore ? 'less' : 'More'">  </span>
+              </a>
+          </ion-card-content>
+    </div>
+
+
+    <div *ngIf="post.postType === 'event'" class="slider-container" style="text-align: center;">
+        <ion-slides  #slides [pager]="post.image.length > 1" [options]="sliderOpts" style="margin-top: 15px;background: white;height: 45vh;z-index: 0;">
+            <ion-slide *ngFor="let item of post.image; let i = index">
+              <div class="slide" tappable doubleTapable (doubleTap)="doSomething()" (tripleTap)="doAnotherThing()"
+                class="LikeAction">
+                <ion-img style="max-width: 100%;max-height: 100%;" *ngIf="item.type === 'image'" [src]="item.file" class="sliderImage" width="deviceWidth" height="videoHeight"></ion-img>
+                  <ion-icon name="heart" class="heart-icon like-icon" *ngIf="like" @fadein></ion-icon>
+              </div>
+            </ion-slide>
+      </ion-slides>
+        <ion-button (click)="onCardClick(post)" color="primary" shape="round" class="slider-btn"> View Event</ion-button>
+    </div>
+    
+    <ion-card-header *ngIf="post.postType === 'event'" style="padding-top: 0;padding-bottom: 0;">
+      <ion-grid >
+        <ion-row>
+          <ion-col size="6">
+            <span>
+              <ion-icon name="calendar" class="icon-sizeT"></ion-icon>
+            </span>
+            <span>
+              <ion-label class="sizeT-labl">{{post.startDate | date:'mediumDate'}} -</ion-label>
+              <ion-label class="sizeT-lab2">{{post.endDate | date:'mediumDate'}}</ion-label>
+            </span>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-icon name="alarm" class="icon-sizeT"></ion-icon>
+            <ion-label class="sizeT-labl">{{post.startTime | date:'shortTime'}} Onwards -</ion-label>
+            <ion-label class="sizeT-lab2">{{post.endtime | date:'shortTime'}} Ends</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-card-title class="card-title">{{post.eventName}}</ion-card-title>
+      <ion-card-title style="font-size: 13px;">Event Type - <span style="font-weight: 600">{{post.about}}</span></ion-card-title>
+    </ion-card-header>
+
+    <span *ngIf="post.postType === 'event'">
+      <ion-card-content  class="card-info">
+          <div *ngIf="!post.showMore">
+            {{trimString(post.description,60)}}
+          </div>
+          <div *ngIf="post.showMore">
+            {{post.description}}
+          </div>
+          <a *ngIf="post.description.length > 100" (click)="viewpost(post)" style="color: #6633cc" (click)="post.showMore = !post.showMore">Show <span [innerHtml]="post.showMore ? 'less' : 'More'">  </span>
+          </a>
+      </ion-card-content>
+    </span>
+
+    <div *ngIf="post.postType === 'media'">
+      <ion-card-content  class="card-info">
+          <div *ngIf="!post.showMore">
+            {{trimString(post.caption,60)}}
+          </div>
+          <div *ngIf="post.showMore">
+            {{post.caption}}
+          </div>
+          <a *ngIf="post.caption.length > 100" (click)="viewpost(post)" style="color: #6633cc" (click)="post.showMore = !post.showMore">Show <span [innerHtml]="post.showMore ? 'less' : 'More'">  </span>
+          </a>
+      </ion-card-content>
+
+    </div>
+
+      <ion-grid *ngIf="post.comments.length != 0">
+        <ion-row *ngIf="post.postType == 'thought' || post.postType == 'media'">
+          <div class="ml-2">
+              <span><a (click)="viewComments(post)" target="_blank" style="color: #6633cc">View all <span *ngIf="post.comments.length !== 0">{{post.comments.length}}</span> comments</a></span>
+          </div>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid *ngIf="post.postType == 'thought' || post.postType == 'media'" style="padding-top: 0;padding-bottom: 0;">
+        <ion-row>
+          <ion-col size="6" style="display: flex">
+            <div style="flex: 1;">
+              <span *ngIf="CheckLikeCountInArray(allLikes, post._id)">
+              <span *ngFor="let likecount of allLikes" class="heart-count">
+                <span (click)="viewLikes(likecount)" *ngIf="likecount.postId === post._id">{{likecount.likes.length}}</span>
+              </span>
+              </span>
+              <div>
+                <ion-icon *ngIf="!CheckLikeInArray(LikedPosts, post._id)" class="liked" (click)="likenewPost(post)" src="assets/icon/heart-outline.svg" style="margin-left: 20px;font-size: 26px;"></ion-icon>
+
+                <ion-icon *ngIf="CheckLikeInArray(LikedPosts, post._id)" (click)="unlikenewPost(post)" src="assets/icon/heart.svg" style="margin-left: 20px;font-size: 26px;" class="liked"></ion-icon>
+              </div>
+            </div>
+
+            <div style="flex: 1;margin-right: 20%;">
+              <span class="read-count"></span>
+              <span>
+                <ion-icon style="margin-left: 19%;" class="notLiked" ></ion-icon>
+              </span>
+            </div>
+          </ion-col>
+
+          <ion-col size="6">
+            <div style="margin-left: 70%;">
+              <ion-icon *ngIf="!CheckbookmarkInArray(bookmarkedPosts, post._id) && post.userId !== userData.id" class="liked" (click)="bookMarkPost(post)" src="assets/icon/bookmark-outline.svg" style="margin-left: 10px;font-size: 26px;color: #000"></ion-icon>
+
+              <ion-icon *ngIf="CheckbookmarkInArray(bookmarkedPosts, post._id) && post.userId !== userData.id" (click)="unBookMarkPost(post)" src="assets/icon/bookmark.svg" style="margin-left: 10px;font-size: 26px;color: #000" class="liked"></ion-icon>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid style="padding: 0;" *ngIf="post.postType == 'thought' || post.postType == 'media'">
+          <ion-row>
+            <ion-col size="2">
+              <div class="ml-2">
+                <ion-avatar style="width: 50%;height: 30%;margin-top: 20%" slot="start">
+                  <ion-img *ngIf="userData.profileImage === null" src="assets/img/profile_icon.png">
+                  </ion-img>
+                  <ion-img *ngIf="userData.profileImage" src="{{userData.profileImage}}">
+                  </ion-img>
+                </ion-avatar>
+              </div>
+            </ion-col>
+
+            <ion-col size="7">
+                <ion-input [(ngModel)]="comment" style="margin-left: -10%;" placeholder='Add a comment...' type="text" (keyup.enter)="hideKeyboard()"></ion-input>
+            </ion-col>
+            <ion-col size="3">
+              <button [disabled]="comment === ''" (click)="addcomment(post)" style="color: #6633cc; float: right;margin-top: 15%;margin-right: 15%; background: #fff;outline: none;" color="light">Post</button>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-card>
+  </div>
+
+</div>
+
+</ion-content>

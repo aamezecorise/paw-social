@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="dismiss()"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              NEW POST
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <h6  *ngIf="posttype === 'postmedia'" style="color: #fff;font-size: 14px;margin-top: 10%;" (click)="imagePost()">Share</h6>
+            <!-- <h6  *ngIf="posttype === 'videopost'" style="color: #fff;font-size: 14px;margin-top: 10%;" (click)="videoPost()">Share</h6> -->
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-toolbar class="search-bar">
+        <ion-searchbar style=" border-radius: 25px !important;"></ion-searchbar>
+      </ion-toolbar> -->
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form [formGroup]="postForm">
+    <!-- <ion-grid *ngIf="posttype === 'imagepost'">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides style="margin-top: 15px;background: white;height: 45vh;" pager="true" [options]="sliderOpts">
+            <ion-slide *ngFor="let item of images;let position=index">
+              <ion-img style="max-width: 100%;max-height: 100%;" *ngIf="item.type === 'image'" [src]="item.file" width="deviceWidth"
+              height="videoHeight">
+              </ion-img>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+    <ion-grid *ngIf="posttype === 'postmedia'">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides style="margin-top: 15px;background: white;height: 45vh;" pager="true" [options]="sliderOpts">
+            <ion-slide *ngFor="let item of images;let position=index">
+              <video *ngIf="item.type === 'video'" poster="{{item.thumbnail}}" [autoplay]="true" [muted]="true" class="video-media" style="width: 100%;" height="videoHeight">
+              <source type="video/mp4">
+              </video>
+              <ion-img style="max-width: 100%;max-height: 100%;" *ngIf="item.type === 'image'" [src]="item.file" width="deviceWidth"
+              height="videoHeight">
+              </ion-img>
+            </ion-slide>
+          </ion-slides>
+          <!-- <img [src]="images[0].file" class="PostImg"> -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-label class="float-label text-label">Caption</ion-label>
+      <ion-row>
+        <ion-col size="12">
+          <textarea id="caption" placeholder="Write a caption..." type="text" name="caption" [formControl]="postForm.controls['caption']" rows="10"></textarea>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-label class="float-label text-label">Location</ion-label>
+      <div style="width: 97%;padding-left: 10px;text-align: center;">
+        <div class="location-container" (click)="GetLocation()">
+          <div
+            style="width: 80%;overflow: hidden;text-align: left;text-overflow: ellipsis;text-justify: inter-word;">
+            <p class="labels"
+              style="margin-left:13px;margin-top:10px;text-align: left;text-justify: inter-word;overflow: hidden;text-overflow: ellipsis">
+                {{postForm.controls['address'].value ?  postForm.controls['address'].value : 'Current Location'}}
+              </p>
+          </div>
+          <div style="width: 20%;height: 52px;text-align: center;">
+            <ion-icon end name="locate" style="font-size: 24px;margin: 12px auto;">
+            </ion-icon>
+          </div>
+        </div>
+      </div>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-label class="float-label text-label">Tag People</ion-label>
+      <div style="width: 97%;padding-left: 10px;text-align: center;">
+        <div class="location-container" (click)="tagPeople(userdetails)">
+          <div
+            style="width: 80%;overflow: hidden;text-align: left;text-overflow: ellipsis;text-justify: inter-word;">
+            <p class="labels"
+              style="margin-left:13px;margin-top:10px;text-align: left;text-justify: inter-word;overflow: hidden;text-overflow: ellipsis">
+                {{postForm.controls['temptagged'].value ?  postForm.controls['temptagged'].value : 'Search for people you want to tag'}}
+              </p>
+          </div>
+        </div>
+      </div>
+    </ion-grid>
+
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col size=12>
+          <ion-item lines="none">
+            <ion-label>Add to Fam Jam</ion-label>
+            <ion-toggle name="isFamJam" [formControl]="postForm.controls['isFamJam']"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+  </form>
+
+</ion-content>

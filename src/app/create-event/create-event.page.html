@@ -1,0 +1,179 @@
+   <ion-header>
+    <ion-toolbar color="primary" class="toolBar">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="1">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="back-icon" (click)="onBack()"></ion-icon>
+          </ion-col>
+          <ion-col class="ion-text-center" size="11">
+            <ion-title class="titlename">
+              CREATE EVENT
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content fullscreen>
+    <form [formGroup]="eventForm">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+  
+        <ion-grid class="grid-top">
+            <div style="width:100%;display: flex;overflow: hidden;overflow-x: scroll;position: inherit;"
+            scrollX="true">
+            <ion-card (click)="selectFile('media')" *ngIf="slidesArray.length < 5"
+              style="height: 35vh;width:100%;min-width:100%;text-align: center">
+              <p style="margin: 30% auto">+<br />Add Photo &nbsp;<ion-text color="danger">*
+                  </ion-text></p>
+            </ion-card>
+            <ion-card style="height: 35vh;width:100%;min-width:100%;text-align: center"
+              *ngFor="let item of slidesArray;let position=index">
+              <div style="text-align: right;" (click)="removeItem(position)">
+                <ion-icon name="close-circle" end class="closeIcon" color="orange">
+                </ion-icon>
+              </div>
+              <ion-img *ngIf="item.type === 'image'" [src]="item.file" style="width:100%;height: inherit;">
+              </ion-img>
+            </ion-card>
+          </div>
+        </ion-grid>
+  
+        <ion-grid class="grid-top">
+          <ion-label class="float-label text-label">Event's Title</ion-label>
+          <ion-row>
+            <ion-col size=12>
+              <ion-item class="roundedInput">
+                <ion-label position="floating" class="float-label">Your's Event's Name&nbsp;<ion-text color="danger">*
+                  </ion-text>
+                </ion-label>
+                <ion-input id="textbox" type="text" name="eventName" [formControl]="eventForm.controls['eventName']"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+        <ion-grid>
+          <ion-label class="float-label text-label">Event's Starts</ion-label>
+          <ion-row>
+            <ion-col size=6>
+              <ion-item class="roundedInput">
+                <ion-label position="floating" class="float-label">Date&nbsp;<ion-text color="danger">*</ion-text>
+                </ion-label>
+                <!-- <ion-input [liIonic4Datepicker]="datePickerObj" name="startDate" [formControl]="eventForm.controls['startDate']"></ion-input> -->
+                <ion-datetime (ngModelChange)="startDateChanged()" [min]="minDate" [max]="maxDate" name="startDate" [formControl]="eventForm.controls['startDate']" displayFormat="DD/MM/YYYY"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size=6>
+              <ion-item class="roundedInput">
+                <ion-label position="floating" class="float-label">Time&nbsp;<ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-datetime (ngModelChange)="starttimeChanged()" #dateTimeAddButton name="startTime" [formControl]="eventForm.controls['startTime']"displayFormat="h:mm a"></ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+  
+        <ion-grid>
+          <ion-label class="float-label text-label">Event's Ends</ion-label>
+          <ion-row>
+            <ion-col size=6>
+              <ion-item class="roundedInput">
+                <ion-label position="floating" class="float-label">Date&nbsp;<ion-text color="danger">*</ion-text>
+                </ion-label>
+                <!-- <ion-input [liIonic4Datepicker]="datePickerObj" name="endDate" [formControl]="eventForm.controls['endDate']"></ion-input> -->
+                <ion-datetime (ngModelChange)="starttimeChanged()" [min]="finishMinDate" [max]="maxDate" name="endDate" [formControl]="eventForm.controls['endDate']"displayFormat="DD/MM/YYYY"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size=6>
+              <ion-item class="roundedInput">
+                <ion-label position="floating" class="float-label">Time&nbsp;<ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-datetime (ngModelChange)="endTimeChanged()" name="endtime" [formControl]="eventForm.controls['endtime']" displayFormat="h:mm a"></ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+  
+        <ion-grid>
+          <ion-label class="float-label text-label">Location&nbsp;<ion-text color="danger">*</ion-text></ion-label>
+          <div style="width: 97%;padding-left: 10px;text-align: center;">
+            <div class="location-container" (click)="GetLocation()">
+              <div
+                style="width: 80%;height: 82px;overflow: hidden;text-align: left;text-overflow: ellipsis;text-justify: inter-word;">
+                <p class="labels"
+                  style="margin-left:13px;margin-top:10px;text-align: left;text-justify: inter-word;overflow: hidden;text-overflow: ellipsis">
+                    {{eventForm.controls['address'].value ?  eventForm.controls['address'].value : 'Current Location'}}
+                  </p>
+              </div>
+              <div style="width: 20%;height: 52px;text-align: center;">
+                <ion-icon end name="locate" style="font-size: 24px;margin: 20px auto;">
+                </ion-icon>
+              </div>
+            </div>
+          </div>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-label class="float-label text-label">Address</ion-label>
+          <ion-row>
+            <ion-col size=12>
+              <ion-item class="roundedInput">
+                <ion-label position="floating">Tell us where you live&nbsp;<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input type="text" name="addr" [formControl]="eventForm.controls['addr']"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+        <ion-grid>
+          <ion-label class="float-label text-label">Description</ion-label>
+          <ion-row>
+            <ion-col size=12>
+              <ion-item class="roundedInput">
+                <ion-label position="floating">Tell us about the Event&nbsp;<ion-text color="danger">*</ion-text></ion-label>
+                <ion-textarea id="descript" name="description" [formControl]="eventForm.controls['description']" autocomplete="on" autocorrect="on" rows="6"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+  
+        <ion-grid>
+          <ion-label class="float-label text-label">Event Type</ion-label>
+          <ion-row>
+            <ion-col size=12>
+              <ion-item class="roundedInput">
+                <ion-label style="padding: 3%; margin-left: -3%;">What is this event about?&nbsp;<ion-text color="danger">*</ion-text></ion-label>
+                <ion-select name="about" [formControl]="eventForm.controls['about']" okText="Okay" cancelText="Dismiss">
+                  <ion-select-option *ngFor="let types of eventTypes" value="{{types.eventType}}">{{types.eventType}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+        <ion-grid>
+          <ion-row>
+            <ion-col size=12>
+              <ion-item lines="none">
+                <ion-label>Make it a private Event</ion-label>
+                <ion-toggle name="isPrivate" [formControl]="eventForm.controls['isPrivate']"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+      </ion-list>
+      <div class="ion-padding">
+        <ion-fab-button [disabled]="eventForm.invalid" style="color: #6633cc;" class="next-btn main-button" (click)="next()">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </form >
+  <!-- createEvent() -->
+    <!-- onNextInvitation() -->
+  </ion-content>

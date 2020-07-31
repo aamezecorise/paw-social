@@ -1,0 +1,22 @@
+<ion-list>
+  <ion-radio-group value="biff" [(ngModel)]="reportMessage">
+    <ion-list-header style="font-size: 20px;">
+      <ion-list>Report</ion-list>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>This is a spam</ion-label>
+      <ion-radio color="primary" mode="ios" slot="start" value="This is a spam"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>This is inappropriate content</ion-label>
+      <ion-radio color="secondary" mode="ios" slot="start" value="This is inappropriate content"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+</ion-list>
+
+<ion-footer style="text-align: center;height: 12%;font-size: 20px;color: #6633cc;font-weight: 600;">
+    <a style="vertical-align: -webkit-baseline-middle;" (click)="report()">Report</a>
+</ion-footer>

@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-searchbar (click)="showUsers()" showCancelButton="focus"></ion-searchbar>
+
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-grid style="padding: 0;">
+    <ion-row>
+      <ion-col style="text-align: center;height: 200px;margin-bottom: -2%;">
+          <ion-slide>
+            <img (click)="postDetails(trend1)" *ngIf="trend1.postType === 'media' && trend1.postMedia[0].type === 'image'" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{trend1.postMedia[0].file}}" width="deviceWidth" height="videoHeight"/>
+              <video (click)="postDetails(trend1)" loop *ngIf="trend1.postType === 'media' && trend1.postMedia[0].type === 'video'" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" playsinline loop [muted]="'muted'" autoplay="autoplay" preload="auto" [poster]="video?.src" [id]="'media-' + video?.id" class="video-media" height="videoHeight">
+                <source [src]="trend1.postMedia[0].file" type="video/mp4">
+                <source [src]="trend1.postMedia[0].file" type="video/3gp">
+                <source [src]="trend1.postMedia[0].file" type="video/mov">
+                <source [src]="trend1.postMedia[0].file" type="video/mpeg">
+                <source [src]="trend1.postMedia[0].file" type="video/qt">
+                <source [src]="trend1.postMedia[0].file" type="video/flv">
+                <source [src]="trend1.postMedia[0].file" type="video/mpe">
+                <source [src]="trend1.postMedia[0].file" type="video/m4p">
+                <source [src]="trend1.postMedia[0].file" type="video/webm">
+                <source [src]="trend1.postMedia[0].file" type="video/swf">
+                <source [src]="trend1.postMedia[0].file" type="video/mpv">
+                <source [src]="trend1.postMedia[0].file" type="video/m4v">
+                <source [src]="trend1.postMedia[0].file" type="video/ogg">
+                <source [src]="trend1.postMedia[0].file" type="video/avchd">
+                <source [src]="trend1.postMedia[0].file" type="video/mp2">
+                <source [src]="trend1.postMedia[0].file" type="video/avi">
+                <source [src]="trend1.postMedia[0].file" type="video/mpg">
+                <source [src]="trend1.postMedia[0].file" type="video/wmv">
+              </video>
+          </ion-slide>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4" style="text-align: center;height: 120px;padding-right: 1.5px;">
+        <ion-slide>
+          <img (click)="postDetails(trend2)" *ngIf="trend2.postType === 'media' && trend2.postMedia[0].type === 'image'" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{trend2.postMedia[0].file}}" />
+            <video (click)="postDetails(trend2)" loop *ngIf="trend2.postType === 'media' && trend2.postMedia[0].type === 'video'" [muted]="'muted'" autoplay="autoplay" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;">
+              <source [src]="trend2.postMedia[0].file" type="video/mp4">
+              <source [src]="trend2.postMedia[0].file" type="video/3gp">
+              <source [src]="trend2.postMedia[0].file" type="video/mov">
+              <source [src]="trend2.postMedia[0].file" type="video/mpeg">
+              <source [src]="trend2.postMedia[0].file" type="video/qt">
+              <source [src]="trend2.postMedia[0].file" type="video/flv">
+              <source [src]="trend2.postMedia[0].file" type="video/mpe">
+              <source [src]="trend2.postMedia[0].file" type="video/m4p">
+              <source [src]="trend2.postMedia[0].file" type="video/webm">
+              <source [src]="trend2.postMedia[0].file" type="video/swf">
+              <source [src]="trend2.postMedia[0].file" type="video/mpv">
+              <source [src]="trend2.postMedia[0].file" type="video/m4v">
+              <source [src]="trend2.postMedia[0].file" type="video/ogg">
+              <source [src]="trend2.postMedia[0].file" type="video/avchd">
+              <source [src]="trend2.postMedia[0].file" type="video/mp2">
+              <source [src]="trend2.postMedia[0].file" type="video/avi">
+              <source [src]="trend2.postMedia[0].file" type="video/mpg">
+              <source [src]="trend2.postMedia[0].file" type="video/wmv">
+            </video>
+          </ion-slide>
+      </ion-col>
+
+      <ion-col size="8" style="text-align: center;height: 120px;padding-left: 0;padding-right: 1px;">
+        <ion-slide>
+          <img (click)="postDetails(trend3)" *ngIf="trend3.postType === 'media' && trend3.postMedia[0].type === 'image'" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{trend3.postMedia[0].file}}" />
+            <video (click)="postDetails(trend3)" loop *ngIf="trend3.postType === 'media' && trend3.postMedia[0].type === 'video'" [muted]="'muted'" autoplay="autoplay" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;">
+              <source [src]="trend3.postMedia[0].file" type="video/mp4">
+              <source [src]="trend3.postMedia[0].file" type="video/3gp">
+              <source [src]="trend3.postMedia[0].file" type="video/mov">
+              <source [src]="trend3.postMedia[0].file" type="video/mpeg">
+              <source [src]="trend3.postMedia[0].file" type="video/qt">
+              <source [src]="trend3.postMedia[0].file" type="video/flv">
+              <source [src]="trend3.postMedia[0].file" type="video/mpe">
+              <source [src]="trend3.postMedia[0].file" type="video/m4p">
+              <source [src]="trend3.postMedia[0].file" type="video/webm">
+              <source [src]="trend3.postMedia[0].file" type="video/swf">
+              <source [src]="trend3.postMedia[0].file" type="video/mpv">
+              <source [src]="trend3.postMedia[0].file" type="video/m4v">
+              <source [src]="trend3.postMedia[0].file" type="video/ogg">
+              <source [src]="trend3.postMedia[0].file" type="video/avchd">
+              <source [src]="trend3.postMedia[0].file" type="video/mp2">
+              <source [src]="trend3.postMedia[0].file" type="video/avi">
+              <source [src]="trend3.postMedia[0].file" type="video/mpg">
+              <source [src]="trend3.postMedia[0].file" type="video/wmv">
+            </video>
+          </ion-slide>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: -2.8%;">
+        <ion-col style="height: 180px;text-align: center;padding-right: 0.8px;" size="6" class="image-container mt-1" *ngFor="let post of newsfeedData">
+          <ion-slide>
+          <img (click)="postDetails(post)" *ngIf="post.postType === 'media' && post.postMedia[0].type === 'image'" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;" src="{{post.postMedia[0].file}}" />
+              <video loop *ngIf="post.postType === 'media' && post.postMedia[0].type === 'video'" [muted]="'muted'" autoplay="autoplay" style="width: -webkit-fill-available;height: -webkit-fill-available;object-fit: cover;">
+                <source [src]="post.postMedia[0].file" type="video/mp4">
+                <source [src]="post.postMedia[0].file" type="video/3gp">
+                <source [src]="post.postMedia[0].file" type="video/mov">
+                <source [src]="post.postMedia[0].file" type="video/mpeg">
+                <source [src]="post.postMedia[0].file" type="video/qt">
+                <source [src]="post.postMedia[0].file" type="video/flv">
+                <source [src]="post.postMedia[0].file" type="video/mpe">
+                <source [src]="post.postMedia[0].file" type="video/m4p">
+                <source [src]="post.postMedia[0].file" type="video/webm">
+                <source [src]="post.postMedia[0].file" type="video/swf">
+                <source [src]="post.postMedia[0].file" type="video/mpv">
+                <source [src]="post.postMedia[0].file" type="video/m4v">
+                <source [src]="post.postMedia[0].file" type="video/ogg">
+                <source [src]="post.postMedia[0].file" type="video/avchd">
+                <source [src]="post.postMedia[0].file" type="video/mp2">
+                <source [src]="post.postMedia[0].file" type="video/avi">
+                <source [src]="post.postMedia[0].file" type="video/mpg">
+                <source [src]="post.postMedia[0].file" type="video/wmv">
+              </video>
+          </ion-slide>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- </div> -->
+
+</ion-content>

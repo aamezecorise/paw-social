@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="onBack()"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              	Comments
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+    	<ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="crescent"></ion-refresher-content>
+ 	</ion-refresher>
+
+	<div *ngIf="isLoading" style="width:100%;height:100px;text-align: center; margin-top: 70%;">
+	    <ion-spinner *ngIf="isLoading" name="crescent" id="pageLoader" color="orange" style="height: 64px;width: 64px">
+	    </ion-spinner>
+	</div>
+
+      <ion-row style="border-bottom: 1px solid #a0a0a0;">
+		<ion-col size="2" style="text-align: center;margin-top: 3%; padding: 0">
+			<img *ngIf="commentdata.profileImage === null || commentdata.profileImage === undefined" src="assets/img/profile_icon.png" class="img-dpsize" style="border-radius: 30px;">
+			<img *ngIf="commentdata.profileImage" src="{{commentdata.profileImage}}" class="img-dpsize" style="border-radius: 30px;">
+		</ion-col>
+
+		<ion-col size="10" style="padding: 0">
+	    <ion-grid>
+	      <ion-row>
+	        <ion-col *ngIf="commentdata.caption">
+	          <div><span style="font-weight: 700">{{commentdata.userName}}</span>
+	            {{commentdata.caption}}
+	          </div>
+	        </ion-col>
+	      </ion-row>
+	    </ion-grid>
+		</ion-col>
+      </ion-row>
+
+	<div class="messaging">
+		<div class="chat_msg">
+			<div class="mesgs">
+				<div class="chat_history">
+					<ion-grid>
+						<ion-row >
+							<ion-col size="12" *ngFor="let cmt of comments">
+									<div class="incoming_msg_img" (click)="onProfileClick(cmt)">
+									<img *ngIf="cmt.userId.profileImage == null" src="assets/img/profile_icon.png" style="border-radius: 50%; float: left;">
+									<img *ngIf="cmt.userId.profileImage" src="{{cmt.userId.profileImage}}" style="border-radius: 50%; float: left;">
+									</div>
+									<div class="received_msg">
+										<span style="font-weight: 700;" (click)="onProfileClick(cmt)">{{cmt.userId.userName}} </span>
+										<span> {{cmt.comment}}</span>
+										<div>
+											<span style="display: inline-block;" class="time_date">{{TimeFromNow(cmt.createdAt)}}</span>
+											<span *ngIf="cmt.likes.length > 0" style="display: inline-block;margin-left: 5%;" class="time_date">{{cmt.likes.length}} Like</span>
+											<span (click)="reply(cmt)" style="display: inline-block;margin-left: 5%;" class="time_date">Reply</span>
+
+											<span style="display: inline-block;margin-left: 5%; float: right;" class="time_date">
+												<span *ngFor="let item of cmt.likes; let i = index">
+								                  <span *ngIf="item.Userid._id == userData.id">
+								                    <ion-icon style="font-size: 20px;color: red;position: absolute;    z-index: 1;" (click)="likeUnlike(cmt)" src="assets/icon/heart.svg" class="liked"></ion-icon>
+								                  </span>
+								                </span>
+								                <ion-icon style="font-size: 20px;" (click)="likeUnlike(cmt)" src="assets/icon/heart-outline.svg" class="liked"></ion-icon>
+											</span>
+										</div>
+									</div>
+
+									<ion-col size="12" *ngFor="let reply of cmt.replies">
+										<ion-row>
+										<ion-col size="2"></ion-col>
+										<ion-col size="10" style="margin-bottom: -8%;">
+											<div class="incoming_msg_img">
+											<img *ngIf="reply.repliedBy.profileImage == null" src="assets/img/profile_icon.png" style="border-radius: 50%; float: left;">
+											<img *ngIf="reply.repliedBy.profileImage" src="{{reply.repliedBy.profileImage}}" style="border-radius: 50%; float: left;">
+											</div>
+										<div class="received_msg">
+											<span style="font-weight: 700;">{{reply.repliedBy.userName}} </span>
+											<span> {{reply.comment}}</span>
+											<div>
+												<span style="display: inline-block;" class="time_date">{{TimeFromNow(reply.createdAt)}}</span>
+												<span *ngIf="reply.likes.length > 0" style="display: inline-block;margin-left: 5%;" class="time_date">{{reply.likes.length}} Like</span>
+												<span (click)="nestedreply(reply)" style="display: inline-block;margin-left: 5%;" class="time_date">Reply</span>
+
+												<span style="display: inline-block;margin-left: 5%; float: right;" class="time_date">
+													<span *ngFor="let item of reply.likes; let i = index">
+									                  <span *ngIf="item.Userid == userData.id">
+									                    <ion-icon style="font-size: 20px;color: red;position: absolute;    z-index: 1;" (click)="unlikeReply(reply)" src="assets/icon/heart.svg" class="liked"></ion-icon>
+									                  </span>
+									                </span>
+									                <ion-icon style="font-size: 20px;" (click)="likeReply(reply)" src="assets/icon/heart-outline.svg" class="liked"></ion-icon>
+												</span>
+											</div>
+										</div>	
+										</ion-col>
+										</ion-row>
+									</ion-col>
+							</ion-col>
+
+							<!-- <ion-col size="12" *ngIf="message.sendername === senderName">
+								<div class="outgoing_msg">
+									<div class="sent_msg">
+										<div class="outgoing_withd_msg">
+										<p>{{ message.body }}</p>
+										<span class="time_date">{{ message.createdAt | date:'shortTime' }} | {{ message.createdAt | date }}</span>
+									</div>
+									</div>
+									<div class="outgoing_msg_img"> 
+									<img *ngIf="senderImage === null" src="assets/img/profile_icon.png" style="border-radius: 50%;">
+									<img *ngIf="senderImage !== null" src="{{senderImage}}" style="border-radius: 50%;">
+									</div>
+								</div>
+								
+							</ion-col> -->
+							</ion-row>
+						</ion-grid>
+				</div>
+			</div>
+		</div>
+	</div>
+</ion-content>
+
+
+<ion-footer>
+	<ion-toolbar>
+			<ion-row>
+				<ion-col size="2">
+					<img *ngIf="userData.profileImage === null || userData.profileImage === undefined" src="assets/img/profile_icon.png" class="img-dpsize" style="border-radius: 30px;margin-left: 10%;margin-top: 10%;">
+					<img *ngIf="userData.profileImage" src="{{userData.profileImage}}" class="img-dpsize" style="border-radius: 30px;margin-left: 10%;margin-top: 15%;">
+				</ion-col>
+
+				<ion-col size="8" style="margin-bottom: 2%;">
+				<ion-textarea #input class="write_msg" id="output"style="background: #fff; height: 50px;border: 1px solid #a0a0a0;    border-radius: 30px;position: static;padding: 15px;" rows="1" [(ngModel)]="comment">
+				</ion-textarea>
+				</ion-col>
+
+				<ion-col size="2" style="margin-bottom: 2%;">
+					<ion-button expand="block" fill="clear" color="primary" class="msg-btn" class="msg-btn" (click)="addcomment()" style="float: right;margin-top: 25%;">Post
+		        	</ion-button>
+				</ion-col>
+			</ion-row>
+	</ion-toolbar>
+</ion-footer>
+
+
+
+
+				<!-- <ion-col size="9">
+					<ion-textarea placeholder="Write a message" class="write_msg" id="output" (keypress)="IsTyping()" style="background: #fff; height: 40px;margin-bottom: 2%;margin-left: 2%; border: 1px solid #f89d5f;" rows="1" [(ngModel)]="message"></ion-textarea>
+				</ion-col>
+
+				<ion-col size="2" [disabled]="message === ''">
+					<ion-button expand="block" fill="clear" color="primary" [disabled]="message === ''" class="msg-btn" (click)="SendMessage()" style="margin-top: 12px;">Send
+		        	</ion-button>
+				</ion-col> -->

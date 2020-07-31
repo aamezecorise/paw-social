@@ -1,0 +1,155 @@
+.user-img{
+  height: 50px;
+  width: 50px;
+}
+
+.search-bar{
+    padding: 10px 0px 10px 0px;
+}
+
+.ion-icon{
+    font-size: 10px;
+}
+
+.card-title{
+    margin-top: 5%;
+    color: #6633cc;
+}
+
+ion-card{ 
+    // margin: 0 !important;
+    // padding: 0 !important;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+
+.icon-size{
+    font-size: 23px !important;
+    color: #fff !important;
+}
+
+.read-user{
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+}
+
+.user2{
+    position: absolute;
+    margin-top: -24px;
+    margin-left: 11px;
+}
+
+.user3{
+    position: absolute;
+    margin-top: -24px;
+}
+
+.read-count{
+    position: absolute;
+    margin-top: 3px;
+    margin-left: -26px;
+    color: #000;
+}
+
+.eye-icon{
+    position: absolute;
+    margin-top: -24px;
+    margin-left: 90px;
+}
+
+.share-count{
+    color: #000;
+    margin-top: 2px;
+    position: absolute;
+    margin-left: 10px;
+}
+
+.share-icon{
+    position: absolute;
+    margin-left: 50px;
+}
+
+.heart-count{
+    color: #000;
+    margin-top: 2px;
+    position: absolute;
+}
+
+.liked{
+    font-size: 26px;
+    /* float: right; */
+    color: red;
+    margin-left: 8%;
+    position: absolute;
+}
+
+.notLiked{
+    font-size: 26px;
+    color: #000
+}
+
+// .main-card{
+//     margin-left: unset;
+//     margin-right: unset;
+// }
+.card-info{
+    border-bottom: 1px solid #ececec;
+}
+
+.icon-sizeT{
+    font-size: 30px;
+    color: #000;
+    margin-top: 8%
+}
+
+.sizeT-labl{
+    margin-top: 5px;
+    position: absolute;
+    color: #000;
+    margin-left: 5px;
+}
+
+.sizeT-lab2{
+    margin-top: 20%;
+    position: absolute;
+    color: #000;
+    margin-left: 5px;
+}
+
+
+.footer{
+    background-color: #6633cc !important;
+    color: #fff;    
+    padding: 15px;
+}
+
+.footer-text{
+    font-weight: 300;
+}
+
+.blank{
+    background-color: #fff;
+    padding-bottom: 30px;
+  }
+
+  .toolBar {
+/*    box-shadow: 0px 1px 5px #888888;
+    --background:#6633cc;*/
+    height: 56px;
+    text-align: center;
+  }
+
+  .titlename{
+    color: #fff;
+      font-size: 24px;
+      font-weight: 400;
+  }
+
+  .time-font-size{
+    font-size: 11px;
+  }
+
+  .scroll-content {
+    padding-bottom: 0 !important;
+}

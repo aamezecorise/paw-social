@@ -1,0 +1,74 @@
+.header{
+    color: #000;    
+    padding: 15px;
+  }
+  
+  
+  .back-icon{
+    font-size: 25px;
+  }
+  
+  .user-img{
+    height: 60px;
+    width: 60px;
+  }
+  
+  .user-list{
+    padding-top: 15px;
+  }
+  
+  .list-head{
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+    .list-img{
+        height: 45px;
+        width: 45px;
+        border-radius: 5px;
+    }
+  
+    button{
+      background-color: #6633cc !important;
+    }
+  
+    .ListBtn{
+      height: 50px !important;
+      width: 50px !important;
+    }
+  
+    .ListClsBtn{
+      background-color: #fff !important;
+      border: 1px solid #6633cc !important;
+      border-radius: 50%;
+      height: 50px !important;
+      width: 50px !important;
+    }
+  
+    .ClsIcon{
+      color: #6633cc !important;
+      font-size: 20px !important;
+    }
+  
+    .SeeAllHead{
+      color: #6633cc;
+      font-weight: 400;
+      font-size: 16px;
+    }
+  
+    .mat-tab-label{
+      padding: 0 65px !important;
+    } 
+  
+    .toolBar {
+/*        box-shadow: 0px 1px 5px #888888;
+        --background:#6633cc;*/
+        height: 56px;
+        text-align: center;
+      }
+    
+      .AppliName{
+        color: #fff;
+          font-size: 24px;
+          font-weight: 400;
+      }

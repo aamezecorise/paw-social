@@ -1,0 +1,52 @@
+.search-bar{
+    padding: 10px 0px 10px 0px;
+}
+
+ion-searchbar{
+    .searchbar-input{
+    border-radius: 30px;
+    }
+    }
+
+.fab-btn{
+    height: 45px !important;
+    width: 45px !important;
+}
+
+.user-img{
+    height: 60px;
+    width: 60px;
+}
+
+.user-list{
+    padding-top: 15px;
+}
+
+.footer{
+    background-color: #6633cc !important;
+    color: #fff;    
+    padding: 15px;
+}
+
+.footer-text{
+    font-weight: 300;
+}
+
+.toolBar {
+/*    box-shadow: 0px 1px 5px #888888;
+    --background:#6633cc;*/
+    height: 56px;
+    text-align: center;
+  }
+
+  .titlename{
+    color: #fff;
+      font-size: 24px;
+      font-weight: 400;
+  }
+
+  .icon-size{
+    font-size: 23px !important;
+    color: #fff !important;
+    vertical-align: middle;
+}

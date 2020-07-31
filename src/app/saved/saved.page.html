@@ -1,0 +1,579 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+      	<ion-col size=1>
+	        <div class="ion-text-start">
+	            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="onBack()" ></ion-icon>
+	        </div>
+      	</ion-col>
+
+        <ion-col size=11 class="ion-text-center">
+          <ion-title class="AppliName">Saved</ion-title>
+        </ion-col>
+        <ion-col size=1>
+          <ion-icon name="person" class="icon UserIcon" (click)="onProfileClick(userDetails)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content #pageContent fullscreen>
+  <ion-refresher style="z-index: 0;" color="primary" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="crescent"></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar (ionClear)="onClear($event)" placeholder="Search User Name" (keyup)="searchfilter($event)" animated></ion-searchbar>
+
+  <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Card start @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+  <div>
+  <ion-card *ngFor="let post of newsfeedData">
+    <ion-card-header class="CardHeader">
+      <ion-row>
+        <ion-list class="listWidth">
+          <ion-item lines="none">
+            <ion-avatar *ngIf="post.postAccount.length == 0 || post.postAccount.length > 1" slot="start">
+              <ion-img src="{{post.profileImage}}" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-avatar *ngIf="post.postAccount.length == 1" slot="start">
+              <ion-img src="{{post.postAccount[0].Petid.profileImage}}" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-grid>
+              <ion-row>
+                <ion-col *ngIf="post.postAccount.length == 0 || post.postAccount.length > 1" size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1">
+                    <h2 style="margin-left: 2%;">{{post.userName}}</h2>
+                    <ion-icon name="pin" class="location-icon"></ion-icon><span
+                        class="location-text">{{post.location.district}}</span>
+                    <!-- <p (click)="onUserProfile()" style="margin-top: 6px;"><span>{{post.userName}}</span>
+                      <ion-icon name="pin" class="location-icon"></ion-icon><span
+                        class="location-text">{{post.location.district}}</span>
+                    </p> -->
+                  </ion-label>
+                </ion-col>
+
+                <ion-col *ngIf="post.postAccount.length == 1" size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1">
+                    <h2>{{post.postAccount[0].PetName}}</h2>
+                    <!-- <h2>{{post.parent}}</h2> -->   <!-- {{post.child}} -->
+                    <p (click)="onUserProfile()" style="margin-top: 6px;"><span>{{post.userName}}</span>
+                      <ion-icon name="pin" class="location-icon"></ion-icon><span
+                        class="location-text">{{post.location.district}}</span>
+                    </p>
+                  </ion-label>
+                </ion-col>
+
+                <ion-col size="2">
+                  <ion-label class="CardHeaderLbl2">
+                    <span>
+                      <ion-icon name="ios-more" style="font-size: x-large; margin-left:50%;" (click)="presentPopover($event)"></ion-icon>
+                      <p class="time-font-size">{{TimeFromNow(post.createdAt)}}</p>
+                      <!-- {{post.createdAt | date:'shortTime'}} -->
+                    </span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+
+      </ion-row>
+    </ion-card-header>
+    <!-- <div *ngIf="post.postType !== 'event'" class="slider-container">
+      <ion-slides pager="true" class="bullets">
+        <ion-slide *ngFor="let imageslides of post.images">
+          <div class="slide" tappable doubleTapable (doubleTap)="doSomething()" (tripleTap)="doAnotherThing()"
+            class="LikeAction">
+            <img src="{{imageslides}}" />
+            <span class="like-icon" *ngIf="like" @fadein>
+              <ion-icon name="heart" class="heart-icon"></ion-icon>
+            </span>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div> -->
+
+    <div *ngIf="post.postType === 'media'" class="slider-container">
+      <ion-slides #slides [pager]="post.postMedia.length > 1" [options]="sliderOpts" style="background: white;height: 45vh;">
+        <ion-slide *ngFor="let item of post.postMedia; let i = index">
+          <div class="slide" tappable doubleTapable (tap)="changeVideoAudio(item.file)" (doubleTap)="likeUnlike(post)" (tripleTap)="doAnotherThing()"
+            class="LikeAction">
+            <ion-img style="width: 100%;height: -webkit-fill-available;" *ngIf="item.type === 'image'" [src]="item.file" width="deviceWidth" height="videoHeight"></ion-img>
+
+            <video *ngIf="item.type === 'video'" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }" (inViewportAction)="onIntersection($event)" playsinline loop [muted]="'muted'" autoplay="autoplay" preload="auto" [poster]="video?.src" [id]="'media-' + item.file" class="video-media" height="videoHeight" style="height: -webkit-fill-available;width: 100%;">
+              <source [src]="item.file" type="video/mp4">
+              <source [src]="item.file" type="video/3gp">
+              <source [src]="item.file" type="video/mov">
+              <source [src]="item.file" type="video/mpeg">
+              <source [src]="item.file" type="video/qt">
+              <source [src]="item.file" type="video/flv">
+              <source [src]="item.file" type="video/mpe">
+              <source [src]="item.file" type="video/m4p">
+              <source [src]="item.file" type="video/webm">
+              <source [src]="item.file" type="video/swf">
+              <source [src]="item.file" type="video/mpv">
+              <source [src]="item.file" type="video/m4v">
+              <source [src]="item.file" type="video/ogg">
+              <source [src]="item.file" type="video/avchd">
+              <source [src]="item.file" type="video/mp2">
+              <source [src]="item.file" type="video/avi">
+              <source [src]="item.file" type="video/mpg">
+              <source [src]="item.file" type="video/wmv">
+            </video>
+            <!-- <span class="like-icon" *ngIf="like" @fadein> -->
+              <ion-icon name="heart" class="heart-icon like-icon" *ngIf="like" @fadein></ion-icon>
+            <!-- </span> -->
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>    
+
+    <!-- <div *ngIf="post.postType == 'image'" class="slider-container">
+      <ion-slides  #slides pager="true" [options]="sliderOpts" style="margin-top: 15px;background: white;height: 45vh;">
+        <ion-slide *ngFor="let item of post.images; let i = index">
+          <div class="slide" tappable doubleTapable (doubleTap)="doSomething()" (tripleTap)="doAnotherThing()"
+            class="LikeAction">
+            <ion-img style="max-width: 100%;max-height: 100%;" *ngIf="item.type === 'image'" [src]="item.file" width="deviceWidth" height="videoHeight"></ion-img>
+            <span class="like-icon" *ngIf="like" @fadein>
+              <ion-icon name="heart" class="heart-icon"></ion-icon>
+            </span>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+
+    <div *ngIf="post.postType == 'video'" class="slider-container">
+      <ion-slides  #slides pager="true" [options]="sliderOpts" style="margin-top: 15px;background: white;height: 45vh;">
+        <ion-slide *ngFor="let item of post.videos; let i = index">
+          <div class="slide" tappable doubleTapable (tap)="changeVideoAudio(video?.id)" (doubleTap)="doSomething()" (tripleTap)="doAnotherThing()" class="LikeAction">
+            <video *ngIf="item.type === 'video'" controls controlsList="nodownload" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }" (inViewportAction)="onIntersection($event)" playsinline loop [muted]="'muted'" preload="auto" muted="muted" [poster]="video?.src" [id]="'media-' + video?.id" class="video-media" style="width: 100%;" height="videoHeight">
+              <source [src]="item.file" type="video/mp4">
+              <source [src]="item.file" type="video/3gp">
+              <source [src]="item.file" type="video/mov">
+              <source [src]="item.file" type="video/mpeg">
+              <source [src]="item.file" type="video/qt">
+              <source [src]="item.file" type="video/flv">
+              <source [src]="item.file" type="video/mpe">
+              <source [src]="item.file" type="video/m4p">
+              <source [src]="item.file" type="video/webm">
+              <source [src]="item.file" type="video/swf">
+              <source [src]="item.file" type="video/mpv">
+              <source [src]="item.file" type="video/m4v">
+              <source [src]="item.file" type="video/ogg">
+              <source [src]="item.file" type="video/avchd">
+              <source [src]="item.file" type="video/mp2">
+              <source [src]="item.file" type="video/avi">
+              <source [src]="item.file" type="video/mpg">
+              <source [src]="item.file" type="video/wmv">
+            </video>
+            <span class="like-icon" *ngIf="like" @fadein>
+              <ion-icon name="heart" class="heart-icon"></ion-icon>
+            </span>
+          </div>
+        </ion-slide>
+      </ion-slides>      
+    </div> -->
+
+   <!--  <div tappable (tap)="changeVideoAudio(videos.id?.id)">
+        <video style="width: 100%;" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
+          (inViewportAction)="onIntersection($event)" playsinline loop [muted]="'muted'" preload="auto" muted="muted"
+          [poster]="videos.id?.src" [id]="'media-' + videos.id?.id">
+          <source [src]="videos.src" type="video/mp4">
+        </video>
+      </div> -->
+
+    <div *ngIf="post.postType == 'thought'">
+    	<ion-card-content  class="card-info">
+              <div *ngIf="!post.showMore">
+                {{trimString(post.thought,100)}}
+              </div>
+              <div *ngIf="post.showMore">
+                {{post.thought}}
+              </div>
+              <a style="color: #6633cc" (click)="post.showMore = !post.showMore">Show <span [innerHtml]="post.showMore ? 'less' : 'More'">  </span>
+              </a>
+          </ion-card-content>
+    </div>
+
+
+    <div *ngIf="post.postType == 'event'" class="slider-container">
+      <ion-slides pager="true" class="bullets">
+        <ion-slide *ngFor="let imageslides of post.images">
+          <div class="slide" tappable doubleTapable (doubleTap)="doSomething()" (tripleTap)="doAnotherThing()"
+            class="LikeAction">
+            <img src="{{imageslides}}" />
+            <ion-button (click)="viewEvent()" color="warning" class="slider-btn"> View Event</ion-button>
+            <span class="like-icon" *ngIf="like" @fadein>
+              <ion-icon name="heart" class="heart-icon"></ion-icon>
+            </span>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div *ngIf="post.postType == 'event'">
+      <ion-row class="TimeRow">
+        <ion-col>
+          <ion-list lines="none">
+            <ion-item class="icon-event">
+              <ion-icon class="TimeIcon" name="calendar" color="dark"></ion-icon>&nbsp;&nbsp;
+              <div>
+                <ion-note color="dark" class="TimeInfo">{{post.eventdate}}</ion-note>
+              </div>
+            </ion-item>
+          </ion-list>
+
+        </ion-col>
+        <ion-col>
+          <ion-list lines="none">
+            <ion-item class="icon-event">
+              <ion-icon class="TimeIcon" name="time" color="dark"></ion-icon>&nbsp;&nbsp;
+              <div>
+                <ion-note color="dark" class="TimeInfo">{{post.eventTime}} Onwards</ion-note>
+              </div>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <ion-card-content *ngIf="post.postType == 'event'" class="CardInfo">
+      <div>
+        <ion-text color="primary" class="CardHead">{{post.eventHeader}}</ion-text>
+      </div>
+      <div class="CaptionWrap">
+        <ion-text class="Caption">
+          <b>{{post.eventcaption.parentname}}</b>&nbsp; {{post.eventcaption.text}}
+        </ion-text>
+      </div>
+    </ion-card-content>
+
+    <div *ngIf="post.postType === 'media'">
+      <ion-card-content  class="card-info">
+          <div *ngIf="!post.showMore">
+            {{trimString(post.caption,60)}}
+          </div>
+          <div *ngIf="post.showMore">
+            {{post.caption}}
+          </div>
+          <a style="color: #6633cc" (click)="post.showMore = !post.showMore">Show <span [innerHtml]="post.showMore ? 'less' : 'More'">  </span>
+          </a>
+      </ion-card-content>
+
+    </div>
+
+    <!-- <ion-row *ngIf="post.postType === 'image'">
+      <ion-col class="margin-body pad-bottom">
+        <ion-text class="caption">
+          <span class="SlideImgUserInfo"><span class="SlideUserName">{{post.caption.parentname}}</span>
+            {{post.caption}}
+            <span class="SlideAtUser" (click)="onUserProfile()"> {{post.caption.tag}}</span><span class="SlideAtUser"
+              (click)="onhashPost()"> {{post.caption.hash}}</span></span>
+        </ion-text>
+      </ion-col>
+    </ion-row> -->
+
+      <ion-grid>
+    <ion-row>
+
+
+          <ion-col size="6" style="display: flex">
+            <!-- <img style="margin-top: 1%;" src="./assets/img/dog.jpg" class="read-user user3" /> -->
+            <div style="flex: 1;">
+              <span *ngIf="CheckLikeCountInArray(allLikes, post._id)">
+              <span *ngFor="let likecount of allLikes" class="heart-count">
+                <span (click)="viewLikes(likecount)" *ngIf="likecount.postId === post._id">{{likecount.likes.length}}</span>
+              </span>
+              </span>
+              <!-- <span>
+
+                <span *ngFor="let item of post.likes; let i = index">
+                  <span *ngIf="item.Userid._id == userData.id">
+                    <ion-icon style="position: absolute;z-index: 1;" (click)="likeUnlike(post)" src="assets/icon/heart.svg" class="liked"></ion-icon>
+                  </span>
+                </span>
+                <ion-icon (click)="likeUnlike(post)" src="assets/icon/heart-outline.svg" class="liked"></ion-icon>
+
+              </span> -->
+
+              <div>
+                <ion-icon *ngIf="!CheckLikeInArray(LikedPosts, post._id)" class="liked" (click)="likenewPost(post)" src="assets/icon/heart-outline.svg" style="margin-left: 20px;font-size: 26px;"></ion-icon>
+
+                <ion-icon *ngIf="CheckLikeInArray(LikedPosts, post._id)" (click)="unlikenewPost(post)" src="assets/icon/heart.svg" style="margin-left: 20px;font-size: 26px;" class="liked"></ion-icon>
+              </div>
+              <!-- <span class="heart-count">{{post.likes.length}}</span>
+              <span>
+
+                <span *ngFor="let item of post.likes; let i = index">
+                  <span *ngIf="item.Userid == userData.id">
+                    <ion-icon (click)="likeUnlike(post)" src="assets/icon/heart.svg" class="liked"></ion-icon>
+                  </span>
+                </span>
+                <ion-icon (click)="likeUnlike(post)" src="assets/icon/heart-outline.svg" class="liked"></ion-icon>
+
+              </span> -->
+            </div>
+
+            <div style="flex: 1;">
+              <span class="read-count"></span>
+              <!-- <span class="read-count">{{post.views.length}}</span> -->
+              <span>
+                <ion-icon  style="margin-left: 19%;" class="notLiked"></ion-icon>
+                <!-- <ion-icon  style="margin-left: 19%;" class="notLiked" name="eye"></ion-icon> -->
+              </span>
+            </div>
+
+            <!-- <div style="flex: 1;">
+              <span class="share-count"></span>
+              <span>
+                <ion-icon (click)="shareLink(event)" class="notLiked" name="share-alt" style="margin-left: -18%;">
+                </ion-icon>
+              </span>
+            </div> -->
+
+          
+          </ion-col>
+
+          <ion-col size="6">
+            
+            <div style="margin-left: 70%;">
+              <ion-icon *ngIf="!CheckbookmarkInArray(bookmarkedPosts, post._id) && post.userId !== userData.id" class="liked" (click)="bookMarkPost(post)" src="assets/icon/bookmark-outline.svg" style="margin-left: 10px;font-size: 26px;color: #000"></ion-icon>
+
+              <ion-icon *ngIf="CheckbookmarkInArray(bookmarkedPosts, post._id) && post.userId !== userData.id" (click)="unBookMarkPost(post)" src="assets/icon/bookmark.svg" style="margin-left: 10px;font-size: 26px;color: #000" class="liked"></ion-icon>
+            </div>
+            
+        
+          </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+
+<!--     <ion-grid>
+      <ion-row class="border-top">
+        <ion-col size="2">
+          <i class="icon-size fa fa-bookmark-o bookmark-set" aria-hidden="true" *ngIf="!book" (click)="bookTrue()"></i>
+          <i class="icon-size fa fa-bookmark bookmark-set" aria-hidden="true" *ngIf="book" (click)="bookFalse()"></i>
+
+        </ion-col>
+
+        <ion-col size="4">
+          <img src="./assets/img/dog1.jpg" class="read-user" />
+          <img src="./assets/img/dog2.jpg" class="read-user user2" />
+          <img src="./assets/img/dog.jpg" class="read-user user3" />
+          <span class="read-count">{{post.views}}</span>
+        </ion-col>
+
+        <ion-col size="3">
+          <span>
+            <ion-icon name="share-alt" class="icon-size"></ion-icon>
+          </span>
+          <span class="IconCount">{{post.share}}</span>
+        </ion-col>
+
+        <ion-col size="3">
+          <span>
+            <i class="share-icon icon-size fa fa-heart-o" aria-hidden="true" *ngIf="!tinyheart"
+              (click)="likeTrue()"></i>
+            <i class="share-icon icon-size fa fa-heart" aria-hidden="true" *ngIf="tinyheart" (click)="likeFalse()"></i>
+          </span>
+          <span class="IconCount ml-1">{{post.likes}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+  </ion-card>
+</div>
+
+
+<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Card start @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+<!-- <div *ngIf="data">
+  <ion-card>
+    <ion-card-header class="CardHeader" style="margin-bottom: 20%;">
+      <ion-row>
+        <ion-list class="listWidth">
+          <ion-item lines="none">
+              <ion-thumbnail slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-thumbnail>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label class="CardHeaderLbl1">
+                    <span class="location-text"><ion-skeleton-text animated style="width: 100%;height: 40px"></ion-skeleton-text></span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+
+      </ion-row>
+    </ion-card-header>
+
+      <ion-row style="margin-bottom: 20%;">
+        <ion-col>
+          <ion-spinner name="crescent" style="margin-left: 50%;"></ion-spinner>
+        </ion-col>
+      </ion-row>
+
+    <ion-grid>
+      <ion-row style="margin-bottom: 5%;">
+        <ion-col size="12">
+          <span ><ion-skeleton-text animated style="width: 100%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 80%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 60%;height: 15px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <span><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header class="CardHeader" style="margin-bottom: 20%;">
+      <ion-row>
+        <ion-list class="listWidth">
+          <ion-item lines="none">
+              <ion-thumbnail slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-thumbnail>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label class="CardHeaderLbl1">
+                    <span class="location-text"><ion-skeleton-text animated style="width: 100%;height: 40px"></ion-skeleton-text></span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+
+      </ion-row>
+    </ion-card-header>
+
+      <ion-row style="margin-bottom: 20%;">
+        <ion-col>
+          <ion-spinner name="crescent" style="margin-left: 50%;"></ion-spinner>
+        </ion-col>
+      </ion-row>
+
+    <ion-grid>
+      <ion-row style="margin-bottom: 5%;">
+        <ion-col size="12">
+          <span ><ion-skeleton-text animated style="width: 100%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 80%;height: 15px"></ion-skeleton-text></span>
+          <span ><ion-skeleton-text animated style="width: 60%;height: 15px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <span><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+</div> -->
+
+
+
+  <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Card start @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+
+<!-- 
+  <ion-card>
+    <ion-card-header class="CardHeader">
+      <ion-row>
+        <ion-list class="listWidth">
+
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <ion-img [src]="hooman1" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1">
+                    <h2>Max Shah</h2>
+                    <p style="margin-top: 6px;"><span>Jay Shah </span>
+                      <ion-icon name="pin" class="location-icon"></ion-icon><span class="location-text">Pune,
+                        Maharashtra</span>
+                    </p>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label class="CardHeaderLbl2">
+                    <span>
+                      <ion-icon name="ios-more" style="font-size: x-large" (click)="presentPopover($event)"></ion-icon>
+                      <p class="time-font-size">2m</p>
+                    </span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+
+      </ion-row>
+    </ion-card-header>
+    <div class="slider-container">
+      <div tappable (tap)="changeVideoAudio(videos.id?.id)">
+        <video style="width: 100%;" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
+          (inViewportAction)="onIntersection($event)" playsinline loop [muted]="'muted'" preload="auto" muted="muted"
+          [poster]="videos.id?.src" [id]="'media-' + videos.id?.id">
+          <source [src]="videos.src" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <ion-row>
+      <ion-col class="margin-body pad-bottom">
+        <ion-text class="caption">
+          <span class="SlideImgUserInfo"><span class="SlideUserName"> Max Shah</span> Day. After us him living brought
+            dry creepeth every meat, land
+            <span class="SlideAtUser">@jayshah #yay</span></span>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-grid>
+      <ion-row class="border-top">
+        <ion-col size="2">
+          <i class="icon-size fa fa-bookmark-o bookmark-set" aria-hidden="true" *ngIf="!book" (click)="bookTrue()"></i>
+          <i class="icon-size fa fa-bookmark bookmark-set" aria-hidden="true" *ngIf="book" (click)="bookFalse()"></i>
+
+        </ion-col>
+
+        <ion-col size="4">
+          <img src="./assets/img/dog1.jpg" class="read-user" />
+          <img src="./assets/img/dog2.jpg" class="read-user user2" />
+          <img src="./assets/img/dog.jpg" class="read-user user3" />
+          <span class="read-count">+12 K</span>
+        </ion-col>
+
+        <ion-col size="3">
+          <span>
+            <ion-icon ios="ios-chatboxes" md="md-chatboxes" class="icon-size"></ion-icon>
+          </span>
+          <span class="IconCount">123+k</span>
+        </ion-col>
+
+        <ion-col size="3">
+          <span>
+            <ion-icon name="heart-empty" class="icon-size"></ion-icon>
+          </span>
+          <span class="IconCount">123+k</span>
+        </ion-col>
+
+
+      </ion-row>
+    </ion-grid>
+  </ion-card> -->
+
+</ion-content>

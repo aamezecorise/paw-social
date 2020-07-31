@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="dismiss()"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              NEW POST
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <h6 style="color: #fff;font-size: 14px;margin-top: 10%;" (click)="next()">Next</h6>
+            <!-- <ion-icon name="add" class="icon-size" (click)="onCreateEvent()"></ion-icon> -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+    <ion-grid class="grid-top">
+        <div style="width:100%;display: flex;overflow: hidden;overflow-x: scroll;position: inherit;"
+        scrollX="true">
+        <!-- <ion-card style="height: 35vh;width:100%;min-width:100%;text-align: center"
+          *ngFor="let item of slidesArray;let position=index">
+          <div style="text-align: right;" (click)="removeItem(position)">
+            <ion-icon name="close-circle" end class="closeIcon" color="orange">
+            </ion-icon>
+          </div>
+          <ion-img *ngIf="item.type === 'video'" [src]="item.file" style="width:100%;height: inherit;">
+          </ion-img>
+        </ion-card> -->
+        <ion-card style="height: 35vh;width:100%;min-width:100%;text-align: center"
+          *ngFor="let item of slidesArray;let position=index">
+          <div style="text-align: right;" (click)="removeItem(position)">
+            <ion-icon name="close-circle" end class="closeIcon" color="orange">
+            </ion-icon>
+          </div>
+          <video *ngIf="item.type === 'video'" poster="{{item.thumbnail}}" [autoplay]="true" [muted]="true" class="video-media" style="width: 100%;" height="videoHeight">
+              <source type="video/mp4">
+          </video>
+          <!-- <ion-img *ngIf="item.type === 'video'" [src]="item.file" style="width:100%;height: inherit;">
+          </ion-img> -->
+        </ion-card>
+      </div>
+    </ion-grid>
+
+
+    <ion-fab *ngIf="slidesArray.length < 5" vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button (click)="openGallery()">
+        <ion-icon name="images"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+
+</ion-content>
+
+<!-- <ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-row>
+      <ion-col size="2">
+      </ion-col>
+
+      <ion-col size="8">
+        <h5 class="ion-text-center"></h5>
+      </ion-col>
+
+      <ion-col size="2">
+        <div class="ion-text-center">
+          <h6 style="color: #fff;" (click)="sharepost()">Next</h6>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ -->
+  <!-- <ion-card style="height: 30vh;width:50vh;"
+    *ngFor="let item of slidesArray;let position=index">
+    <div style="text-align: left;" (click)="removeItem(position)">
+      <ion-icon name="close-circle" end class="closeIcon" color="orange">
+      </ion-icon>
+    </div>
+    <ion-img *ngIf="item.type === 'image'" [src]="item.file" style="height: 30vh;width:50vh">
+    </ion-img>
+    <video *ngIf="item.type === 'video'" poster="{{item.thumbnail}}" style="height: 50vh;width:50vh"
+      [autoplay]="true" [muted]="true">
+      <ion-icon (click)="removeItem(position)"  name="arrow-dropright-circle"></ion-icon>
+      <source type="video/mp4">
+    </video>
+  </ion-card> -->
+
+<!--   <div class="ion-padding">
+    <ion-slides pages>
+      <ion-slide *ngFor="let item of slidesArray;let position=index">
+        <div style="text-align: left;" (click)="removeItem(position)">
+          <ion-icon name="close-circle" end class="closeIcon" color="orange">
+          </ion-icon>
+        </div>
+        <ion-img *ngIf="item.type === 'image'" [src]="item.file" style="height: 30vh;width:30vh">
+        </ion-img>
+        <video *ngIf="item.type === 'video'" poster="{{item.thumbnail}}" style="height: 50vh;width:50vh"
+          [autoplay]="true" [muted]="true">
+          <ion-icon (click)="removeItem(position)"  name="arrow-dropright-circle"></ion-icon>
+          <source type="video/mp4">
+        </video>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button (click)="openGallery()">
+        <ion-icon name="images"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="captureVideo()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+</ion-content> -->

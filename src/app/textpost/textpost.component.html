@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="icon-size" (click)="dismiss()"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-title class="titlename">
+              NEW THOUGHT
+            </ion-title>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <h6 style="color: #fff;font-size: 14px;margin-top: 10%;" (click)="textPost()">Upload</h6>
+            <!-- <ion-icon name="add" class="icon-size" (click)="onCreateEvent()"></ion-icon> -->
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-toolbar class="search-bar">
+        <ion-searchbar style=" border-radius: 25px !important;"></ion-searchbar>
+      </ion-toolbar> -->
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+<form [formGroup]="textForm">
+  <ion-grid style="margin-top: 3%;">
+    <ion-label class="float-label text-label">What's on your mind?</ion-label>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item class="roundedInput">
+          <ion-textarea id="thought" placeholder="Share your thoughts!" type="text" name="thought" [formControl]="textForm.controls['thought']" rows="5"></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+    <ion-grid>
+      <ion-label class="float-label text-label">Location</ion-label>
+      <div style="width: 97%;padding-left: 10px;text-align: center;">
+        <div class="location-container" (click)="GetLocation()">
+          <div
+            style="width: 80%;overflow: hidden;text-align: left;text-overflow: ellipsis;text-justify: inter-word;">
+            <p class="labels"
+              style="margin-left:13px;margin-top:10px;text-align: left;text-justify: inter-word;overflow: hidden;text-overflow: ellipsis">
+                {{textForm.controls['address'].value ?  textForm.controls['address'].value : 'Current Location'}}
+              </p>
+          </div>
+          <div style="width: 20%;height: 52px;text-align: center;">
+            <ion-icon end name="locate" style="font-size: 24px;margin: 12px auto;">
+            </ion-icon>
+          </div>
+        </div>
+      </div>
+    </ion-grid>
+
+<!--     <ion-grid>
+      <ion-label class="float-label text-label">Address</ion-label>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="roundedInput">
+            <ion-input type="text" name="addr" [formControl]="textForm.controls['addr']"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+
+    <ion-grid>
+      <ion-label class="float-label text-label">Tag People</ion-label>
+      <div style="width: 97%;padding-left: 10px;text-align: center;">
+        <div class="location-container" (click)="tagPeople(userdetails)">
+          <div
+            style="width: 80%;overflow: hidden;text-align: left;text-overflow: ellipsis;text-justify: inter-word;">
+            <p class="labels"
+              style="margin-left:13px;margin-top:10px;text-align: left;text-justify: inter-word;overflow: hidden;text-overflow: ellipsis">
+                {{textForm.controls['temptagged'].value ?  textForm.controls['temptagged'].value : 'Search for people you want to tag'}}
+              </p>
+          </div>
+        </div>
+      </div>
+    </ion-grid>
+
+</form>
+  
+</ion-content>

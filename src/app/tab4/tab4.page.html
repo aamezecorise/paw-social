@@ -1,0 +1,154 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-title class="AppliName">Notifications</ion-title>
+        </ion-col>
+        <!-- <ion-col size=1>
+          <ion-icon name="person" class="icon UserIcon" (click)="onUserProfile()"></ion-icon>
+        </ion-col> -->
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+       <ion-list>
+        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <ion-list-header class="list-head">
+          Your Activities
+        </ion-list-header>
+
+
+  <div *ngFor="let notify of notifications">
+
+    <div *ngIf="data">
+      <ion-item lines="none" class="user-list">
+            <ion-avatar slot="start" class="user-img">
+                <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+        <!-- <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail> -->
+        <ion-label class="CardHeaderLbl1" style="margin-bottom: 10%;">
+          <span class="location-text"><ion-skeleton-text animated style="width: 100%;height: 30px"></ion-skeleton-text></span>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div *ngIf="!data">
+        <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="{{notify.senderId.profileImage}}">
+          </ion-avatar>
+          <ion-label>
+            <!-- <h2>{{notify.senderId.userName}}</h2> -->
+            <h3>{{notify.message}}</h3><span style="font-size: 14px;" *ngIf="notify.comment">: {{notify.comment}}</span>
+            <span style="font-size: 14px;" *ngIf="notify.eventName">: {{notify.eventName}}</span>
+            <span style="font-size: 14px;" *ngIf="notify.eventStartTime">: {{notify.eventStartTime | date:'short'}}</span>
+            <p>{{TimeFromNow(notify.createdAt)}}</p>
+          </ion-label>
+          <ion-avatar *ngIf="notify.petProfile" slot="end">
+            <img src="{{notify.petProfile}}">
+          </ion-avatar>
+          <div style="float: right;height: 6vh;width: 6vh" *ngIf="notify.postImage">
+          <ion-img style="object-fit: cover;height: -webkit-fill-available;width: -webkit-fill-available;" src="{{notify.postImage}}"></ion-img>
+          </div>
+          <div style="float: right;height: 6vh;width: 6vh" *ngIf="notify.eventImage">
+          <ion-img style="object-fit: cover;height: -webkit-fill-available;width: -webkit-fill-available;" src="{{notify.eventImage}}"></ion-img>
+          </div>
+        </ion-item>
+    </div>
+<!--         <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="./assets/images/simon.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Simon Grimm +2</h2>
+            <h3>Liked photo of you</h3>
+            <p>15h ago</p>
+          </ion-label>
+          <ion-fab-button class="ListBtn">
+            <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+          </ion-fab-button>&nbsp; &nbsp;
+          <button class="ListBtn ListClsBtn">
+            <ion-icon ios="ios-close" md="md-close" class="ClsIcon"></ion-icon>
+          </button>
+        </ion-item>
+
+        <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="./assets/images/billGates.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Bill Gates</h2>
+            <h3>Liked photo of you</h3>
+            <p>15h ago</p>
+          </ion-label>
+          <ion-fab-button class="ListBtn">
+            <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+          </ion-fab-button>&nbsp; &nbsp;
+          <button class="ListBtn ListClsBtn">
+            <ion-icon ios="ios-close" md="md-close" class="ClsIcon"></ion-icon>
+          </button>
+        </ion-item> -->
+
+        <!-- <ion-list-header class="SeeAllHead" (click)="followrequest()">
+          See All (12)
+        </ion-list-header> -->
+        
+<!--         <ion-list-header class="list-head">
+          Enquiries
+        </ion-list-header>
+        <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="./assets/images/pet1.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Joy Malohtra</h2>
+            <h3>wants to enquire about Max</h3>
+            <p>15h ago</p>
+          </ion-label>        
+        </ion-item>
+
+
+        <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="./assets/images/pet2.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Joy Malohtra</h2>
+            <h3>wants to enquire about Max</h3>
+            <p>15h ago</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="./assets/images/pet3.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Joy Malohtra</h2>
+            <h3>wants to enquire about Max</h3>
+            <p>15h ago</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none" class="user-list">
+          <ion-avatar slot="start" class="user-img">
+            <img src="./assets/images/pet4.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Joy Malohtra</h2>
+            <h3>wants to enquire about Max</h3>
+            <p>15h ago</p>
+          </ion-label>
+        </ion-item> -->
+        </div>
+      </ion-list>
+
+</ion-content>

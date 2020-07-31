@@ -1,0 +1,123 @@
+ .roundedInput {
+  --border-color: #e4e4e4;
+  --border-radius: 3px;
+  --border-width: 1px;
+  --box-shadow: 2px gray;
+  --highlight-height: 0;
+  --background: #fff;
+   padding: 6px;
+ }
+
+ .text-label{
+  margin-left: 15px;
+ }
+
+.icon-size{
+    font-size: 23px !important;
+    color: #fff !important;
+}
+
+.HeaderIcon{
+    color: #fff !important;
+    font-size: 35px !important;
+    margin-top: 7px;
+}
+
+.CardRow{
+    padding: 20px 0px 20px 0px;
+    background-color: #fff;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.CardIcon{
+    color: #707070;
+    font-size: 25px;
+    padding-top: 15px;
+}
+
+.CardHead{
+    color: #454545;
+    font-size: 14px;
+    margin-top: 0px;
+}
+
+.CardTitle{
+    color: #454545 !important;
+    font-size: 22px !important;
+}
+
+.location-container {
+    display: flex;
+    min-height: 52px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-top: 3%;
+}
+
+.MainBody{
+    background-color: #f6f6f6 !important;
+}
+
+.AddBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0px 50px 0px;
+}
+
+.padding{
+    padding: unset !important;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 1px solid #e4e4e4;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: none;
+  margin: 8px 0;
+  color: #9597a6;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #e4e4e4;
+    border-radius: 4px;
+    color: #9597a6;
+  }
+
+ .TextLbl {
+    color: #9597a6;
+  }
+
+  .ToggleBtn{
+    color: #6633cc !important;
+  }
+
+
+  .toolBar {
+/*    box-shadow: 0px 1px 5px #888888;
+    --background:#6633cc;*/
+    height: 56px;
+    text-align: center;
+  }
+
+  .titlename{
+    color: #fff;
+      font-size: 24px;
+      font-weight: 400;
+  }
+
+  .PostImg{
+    width: 100%;
+    height: auto;
+    border-radius: 7px;
+  }

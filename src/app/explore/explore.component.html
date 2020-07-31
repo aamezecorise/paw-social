@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolBar">
+    <ion-buttons style="color: #fff;" slot="start">
+      <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
+    </ion-buttons>
+  <ion-grid>
+    <ion-row>
+      <ion-col size=11 class="ion-text-center">
+        <ion-title class="AppliName">Explore</ion-title>
+      </ion-col>
+      <ion-col size=1>
+        <!-- <ion-icon name="person" class="icon UserIcon" (click)="onUserProfile()"></ion-icon> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>
+</ion-header>
+
+
+<ion-content #pageContent fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+  <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Card start @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+  <ion-card *ngFor="let temp of video">
+    <ion-card-header class="CardHeader">
+      <ion-row>
+        <ion-list class="listWidth">
+
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <ion-img [src]="hooman1" class="img-dpsize"></ion-img>
+            </ion-avatar>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-label (click)="onUserProfile()" class="CardHeaderLbl1">
+                    <h2>Max Shah</h2>
+                    <p style="margin-top: 6px;"><span>Jay Shah </span>
+                      <ion-icon name="pin" class="location-icon"></ion-icon><span class="location-text">Pune,
+                        Maharashtra</span>
+                    </p>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label class="CardHeaderLbl2">
+                    <span>
+                      <ion-icon name="ios-more" style="font-size: x-large" (click)="presentPopover($event)"></ion-icon>
+                      <p class="time-font-size">2m</p>
+                    </span>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+
+      </ion-row>
+    </ion-card-header>
+    <!-- <div class="slider-container">
+      <div tappable (tap)="changeVideoAudio(temp?.id)">
+        <video style="width: 100%;"
+          inViewport
+          [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
+          (inViewportAction)="onIntersection($event)" 
+          playsinline loop
+          [muted]="'muted'" preload="auto"
+          [poster]="temp?.src"    
+          [id]="'media-' + temp?.id">
+          <source [src]="temp.src" type="video/mp4">
+        </video>
+      </div>
+    </div> -->
+    <ion-row>
+      <ion-col class="margin-body pad-bottom">
+        <ion-text class="caption">
+          <span class="SlideImgUserInfo"><span class="SlideUserName"> Max Shah</span> Day. After us him living brought
+            dry creepeth every meat, land
+            <span class="SlideAtUser">@jayshah #yay</span></span>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-grid>
+      <ion-row class="border-top">
+        <ion-col size="2">
+          <i class="icon-size fa fa-bookmark-o bookmark-set" aria-hidden="true" *ngIf="!book" (click)="bookTrue()"></i>
+          <i class="icon-size fa fa-bookmark bookmark-set" aria-hidden="true" *ngIf="book" (click)="bookFalse()"></i>
+
+        </ion-col>
+
+        <ion-col size="4">
+          <img src="./assets/img/dog1.jpg" class="read-user" />
+          <img src="./assets/img/dog2.jpg" class="read-user user2" />
+          <img src="./assets/img/dog.jpg" class="read-user user3" />
+          <span class="read-count">+12 K</span>
+          <span>
+            <ion-icon name="eye" class="icon-size eye-icon"></ion-icon>
+          </span>
+        </ion-col>
+
+        <!-- <ion-col size="2">
+          <span class="share-count1">123+k</span>
+          <span>
+            <ion-icon name="share-alt" class="galleryCard-icon"></ion-icon>
+          </span>
+        </ion-col> -->
+
+        <ion-col size="3">
+          <span class="share-count1">123+k</span>
+          <span>
+            <ion-icon ios="ios-chatboxes" md="md-chatboxes" class="galleryCard-icon"></ion-icon>
+          </span>
+        </ion-col>
+
+        <ion-col size="3">
+          <span class="share-count1">123+k</span>
+          <span>
+            <ion-icon name="heart-empty" class="galleryCard-icon"></ion-icon>
+          </span>
+        </ion-col>
+
+        
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>

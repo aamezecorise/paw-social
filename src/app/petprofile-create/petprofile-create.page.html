@@ -1,0 +1,279 @@
+   <ion-header>
+    <ion-toolbar color="primary" class="toolBar">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="1">
+            <ion-icon style="vertical-align: -webkit-baseline-middle;" name="arrow-back" class="back-icon" (click)="onPetBack()"></ion-icon>
+          </ion-col>
+          <ion-col class="ion-text-center" size="11">
+            <ion-title class="titlename">
+              {{isEdit ? 'Edit Pet Profile' : 'Add Pet'}}
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-header>
+
+  
+  <ion-content class="mt-3">
+    <form class="form-md" [formGroup]="petForm">
+    <ion-grid class="CardDesign">
+      <ion-row>
+        <ion-col>
+          <h4 class="ion-text-center">Hi {{userData.fullName}}, Tell us a little about your furry friend.</h4>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="!isEdit" style="width:100%;text-align: center;padding-left: 10px;margin-bottom: 8%;">
+            <p id="questionText" style="padding-left: 10px;">What type of a pet do you have?</p>
+            <div style="width:100%;display: flex">
+              <ion-card id="card1" (click)="setPetCategory('dog')" [class.highlight]="category === 'dog'">
+                <ion-icon src="assets/icon/dog.svg" style="height: 64px;width: 64px;margin-top: 10%;" fill>
+                </ion-icon>
+                <div class="PetNameBody ion-text-center">
+                  Dog
+                </div>
+              </ion-card>
+              <ion-card id="card" (click)="setPetCategory('cat')" [class.highlight]="category === 'cat'">
+                <ion-icon src="assets/icon/cat.svg" style="height: 64px;width: 64px;margin-top: 10%;" fill>
+                </ion-icon>
+                <div class="PetNameBody ion-text-center">
+                  Cat
+                </div>
+              </ion-card>
+              <ion-card id="card" (click)="setPetCategory('bird');" [class.highlight]="category === 'bird'">
+                <ion-icon src="assets/icon/bird.svg" style="height: 64px;width: 64px;margin-top: 10%;" fill>
+                </ion-icon>
+                <div class="PetNameBody ion-text-center">
+                  Bird
+                </div>
+              </ion-card>
+              <ion-card id="card" (click)="setPetCategory('others');" [class.highlight]="category === 'others'">
+                <ion-icon src="assets/icon/horse.svg" style="color:#6633cc;height: 64px;width: 34px;margin-top: 10%;" fill>
+                </ion-icon>
+                <div class="PetNameBody ion-text-center">
+                  Others
+                </div>
+              </ion-card>
+            </div>
+          </div>
+
+
+          <ion-avatar style="height:150px;width:150px;border:1px solid #6633cc;margin:0 auto" (click)="selectProfile()">
+            <ion-img *ngIf="base64Profie == null" src="assets/icon/dog_gray.svg"></ion-img>
+            <ion-img *ngIf="base64Profie !== null" [src]="base64Profie"></ion-img>
+            <div style="float: right;margin: -80px -8px;color: #6633cc;">
+              <ion-icon name="add-circle" color="orange"
+                style="background-color: #fff;font-size: 16px;border-radius: 8px;"></ion-icon>
+            </div>
+          </ion-avatar>
+          <p style="color:#78849e;font-size: 14px;line-height: 18px;margin-top:10px;text-align: center">Pet Picture</p>
+  
+      <!-- <ion-row class="mt-4">
+        <ion-col size="12" class="MainDisplay">
+          <div class="ImgDisplay ion-text-center">
+            <ion-icon name="ios-add-circle" class="ImgAddIcon text-right">
+            </ion-icon>
+            <div class="CameraIconDiv">
+              <i class="fa fa-camera CameraIcon" aria-hidden="true"></i>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <h5 class="ion-text-center">Pet Picture</h5>
+        </ion-col>
+      </ion-row> -->
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <div class="form-group">
+              <ion-label for="formGroupExampleInput">Name</ion-label>
+              <ion-input id="petbox" type="text" name="petname" [formControl]="petForm.controls['petName']" (keyup.enter)="hideKeyboard()" required (keyup.enter)="hideKeyboard()" class="form-control InputBox" placeholder="Pet's Name"></ion-input>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      
+
+          <div *ngIf="category !== 'bird' && category !== 'others' && category !== null && isDisplay && !isEdit"
+            style="width:97%;text-align: left;margin-top: 5%;padding-left: 10px;">
+            <ion-label style="font-size: 14px;color: #8e8e8e;">Pets Primary Breed</ion-label>
+            <ion-item lines="none" [ngClass]="isClickedItem1 ? 'itemSelect1' : 'itemSelect'">
+              <ionic-selectable #primaryComponent (click)="open()" [items]="breeds" itemValueField="name"
+                itemTextField="name" [canSearch]="true" (onSearch)="SearchBreeds($event)"
+                (onChange)="primaryBreedChanged($event)" [hasInfiniteScroll]="true"
+                (onInfiniteScroll)="getMoreBreeds($event)">
+                <ng-template ionicSelectableItemIconTemplate let-breed="item" let-isBreedSelected="isItemSelected"
+                  itemIconSlot="start">
+                  <ion-icon slot="start" [name]="isBreedSelected ? 'checkbox' : 'square-outline'"
+                    [color]="isBreedSelected ? 'orange' : null">
+                  </ion-icon>
+                </ng-template>
+                <ng-template ionicSelectablePlaceholderTemplate>
+                  <span *ngIf="petForm.controls['primary_breed'].value==null"
+                    style="font-size: 14px;color: #8e8e8e;">Select primary breed</span>
+                  <span *ngIf="petForm.controls['primary_breed'].value!==null"
+                    style="font-size: 14px;color: #454545;">{{petForm.controls['primary_breed'].value}}</span>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </div>
+          <div *ngIf="category !== 'bird' && category !== 'others' && category !== null && isDisplay && !isEdit"
+            style="width:97%;text-align: left;margin-top: 8%;padding-left: 10px;">
+            <ion-label style="font-size: 14px;color: #8e8e8e;">Pets Secondary Breed</ion-label>
+            <ion-item lines="none" [ngClass]="isClickedItem2 ? 'itemSelect1' : 'itemSelect'">
+              <ionic-selectable #secondaryComponent (click)="open1()" [items]="breeds" itemValueField="name"
+                itemTextField="name" [canSearch]="true" (onSearch)="SearchBreeds($event)"
+                (onChange)="secondaryBreedChanged($event)" [hasInfiniteScroll]="true"
+                (onInfiniteScroll)="getMoreBreeds($event)">
+                <ng-template ionicSelectableItemIconTemplate let-port="item" let-isBreedSelected="isItemSelected"
+                  itemIconSlot="start">
+                  <ion-icon slot="start" [name]="isBreedSelected ? 'checkbox' : 'square-outline'"
+                    [color]="isBreedSelected ? 'orange' : null">
+                  </ion-icon>
+                </ng-template>
+                <ng-template ionicSelectablePlaceholderTemplate>
+                  <span *ngIf="petForm.controls['secondary_breed'].value===null"
+                    style="font-size: 14px;color: #8e8e8e;">Select secondary breed</span>
+                  <span *ngIf="petForm.controls['secondary_breed'].value!==null"
+                    style="font-size: 14px;color: #454545;">{{petForm.controls['secondary_breed'].value}}</span>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </div>
+          <div *ngIf="category === 'bird' && category !== null && isDisplay && !isEdit"
+            style="width:100%;text-align: left;margin-top: 5%">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label class="labels">Breed</mat-label>
+              <input matInput type="text" name="breed" [formControl]="petForm.controls['primary_breed']">
+            </mat-form-field> -->
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <div class="form-group">
+                    <ion-label for="formGroupExampleInput">Breed</ion-label>
+                    <ion-input type="text" name="breed" [formControl]="petForm.controls['primary_breed']" (keyup.enter)="hideKeyboard()" required (keyup.enter)="hideKeyboard()" class="form-control InputBox" id="formGroupExampleInput" placeholder="Breed's Name"></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </div>
+
+          <div *ngIf="category === 'others' && category !== null && isDisplay && !isEdit"
+            style="width:100%;text-align: left;margin-top: 5%">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label class="labels">Breed</mat-label>
+              <input matInput type="text" name="breed" [formControl]="petForm.controls['primary_breed']">
+            </mat-form-field> -->
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <div class="form-group">
+                    <ion-label for="formGroupExampleInput">Breed</ion-label>
+                    <ion-input type="text" name="breed" [formControl]="petForm.controls['primary_breed']" (keyup.enter)="hideKeyboard()" required (keyup.enter)="hideKeyboard()" class="form-control InputBox" id="formGroupExampleInput" placeholder="Breed's Name"></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12" color="light">
+                <mat-form-field appearance="outline" style="margin-top: 8%;width: 100%;">
+                  <mat-label class="labels" style="margin-left:3px; color: #757575;">Birth Date</mat-label>
+                  <input id="birthDate" matInput [max]="maxDate" readonly [matDatepicker]="picker" (click)="picker.open()" name="birthday" [formControl]="petForm.controls['birthday']" placeholder="Choose a date"
+                    >
+                  <mat-datepicker-toggle #picker (closed)="input.blur()" matSuffix [for]="picker"
+                    >
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <div style="margin-top: 5%;width:100%;text-align: left">
+                <mat-label class="labels">What is the Gender? </mat-label>
+                <div style="padding-top: 3%;padding-left: 10px;">
+                  <mat-radio-group aria-label="Select an option" name="gender" [formControl]="petForm.controls['gender']">
+                    <mat-radio-button value="male" style="font-size: 14px;">Male
+                    </mat-radio-button>
+                    <mat-radio-button value="female" style="margin-left: 40px;font-size: 14px;">
+                      Female</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+  
+          
+
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <div class="form-group">
+                  <ion-label for="formGroupExampleInput">Weight (Approx)</ion-label>
+                  <ion-input type="number" name="weight" placeholder="Weight (Kg.)"
+                    [formControl]="petForm.controls['weight']" (input)=_keyPress($event.target.value) class="form-control InputBox" id="formGroupExampleInput"></ion-input>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="form-group">
+                  <ion-label for="exampleFormControlTextarea1">Description</ion-label>
+                  <ion-textarea id="petdescript" style="border: 1.5px solid #e1e4e8;border-radius: 6px;" rows="6" 
+                  name="description" [formControl]="petForm.controls['description']" placeholder="Tell us about your pets aspirations, favorite food, hobbies, toys etc."></ion-textarea>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+          
+
+    </ion-grid>
+  </form>
+  </ion-content>
+
+<!--   <ion-footer padding style="background: white;" no-border>
+    <ion-button expand="block" id="petbtn" (click)="uploadProfileImage()">CREATE PET PROFILE<ion-spinner *ngIf="Loading" style="transform: scale(0.8);" name="crescent"></ion-spinner></ion-button>
+  </ion-footer> -->
+  
+<!--   <ion-footer>
+    <div class="bar bar-footer bar-assertive footer" (click)="uploadProfileImage()">
+      <ion-title class="ion-text-center footer-text">CREATE PET PROFILE</ion-title>
+    </div>
+  </ion-footer> -->
+
+
+
+
+<ion-footer padding no-border>
+
+<!--   <ion-button [disabled]="petForm.invalid" expand="block" (click)="uploadProfileImage()">CREATE PET PROFILE <ion-spinner *ngIf="Loading" style="transform: scale(0.8);" name="crescent"></ion-spinner></ion-button> -->
+
+
+   <ion-button *ngIf="!isEdit" (click)="uploadProfileImage()" expand="block">
+      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      {{!isLoading ? 'CREATE PET PROFILE':''}}
+    </ion-button>
+    <ion-button *ngIf="isEdit" (click)="uploadProfileImage()" expand="block">
+      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner> {{!isLoading ? 'Save':''}}
+    </ion-button>
+
+
+
+</ion-footer>
